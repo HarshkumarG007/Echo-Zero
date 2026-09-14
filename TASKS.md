@@ -337,3 +337,45 @@ First five tasks only, in dependency order, small enough for one agent session e
 **Acceptance criteria:** Hook an ML model (or weighted logic) into `MiraDialogueSelector` to bias certain dialogue variants based on telemetry data.
 
 **Test:** EditMode tests verifying Mira returns different dialogue strings based on different playstyle inputs.
+
+---
+
+### [x] TASK-025: Experiment Registry and Reproducibility Checklist
+
+**Objective:** Create a formal record of ML experiments from Phase 7 and a checklist for running them.
+
+**Files:** `docs/evaluation/experiment-registry.md`, `docs/evaluation/reproducibility-checklist.md`.
+
+**Dependencies:** TASK-024.
+
+**Acceptance criteria:** Both markdown files exist in `docs/evaluation/` and outline the purpose, method, and steps to reproduce the ML-driven features (Drift Pursuit and Adaptive Dialogue).
+
+**Test:** N/A (Documentation).
+
+---
+
+### [ ] TASK-026: Benchmark Suite
+
+**Objective:** Develop a headless-compatible benchmarking script to measure the performance impact of the ML models against the Phase 6 baseline.
+
+**Files:** `Assets/_Project/Scripts/Tools/Benchmarking/PerformanceBenchmark.cs`, `EchoZero.Tools.Benchmarking.asmdef`.
+
+**Dependencies:** None.
+
+**Acceptance criteria:** A Unity script capable of executing inference tests over thousands of iterations, outputting timing metrics (min, max, avg frame time) to the console or log.
+
+**Test:** Execute the benchmark and verify it completes without errors.
+
+---
+
+### [ ] TASK-027: Evaluation Report
+
+**Objective:** Draft a comprehensive evaluation report comparing AI behaviors and performance metrics before and after the ML integration.
+
+**Files:** `docs/evaluation/evaluation-report.md`.
+
+**Dependencies:** TASK-025, TASK-026.
+
+**Acceptance criteria:** A written report validating the experiments against Quality Gate 7/8, including performance data from the benchmark suite.
+
+**Test:** N/A (Documentation).
