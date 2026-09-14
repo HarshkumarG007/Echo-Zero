@@ -4,6 +4,7 @@ using UnityEngine;
 using EchoZero.Core;
 using EchoZero.Core.Events;
 using EchoZero.Core.Events.Narrative;
+using EchoZero.Core.Events.Gameplay;
 using EchoZero.Narrative;
 using EchoZero.Narrative.Fragments;
 
@@ -88,6 +89,26 @@ namespace EchoZero.Tests.EditMode
 
             Assert.IsFalse(_pedestal1.CanRecall);
             Assert.IsFalse(_pedestal2.CanRecall);
+        }
+
+        [Test]
+        public void OnRecall_InvalidState_PublishesNothingFoundEvent()
+        {
+            // Resolve the contradiction first so the state is no longer active
+            _registry.ValidateFragment("frag_A");
+            
+            bool eventFired = false;
+            EventBus<NothingFoundEvent>.Subscribe(e => eventFired = true);
+
+            // Re-enable the pedestal manually to simulate glitching to it
+            var lockField = typeof(ChoicePedestal).GetField("_isLocked", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            lockField.SetValue(_pedestal2, false);
+
+            _pedestal2.OnRecall();
+
+            Assert.IsTrue(eventFired);
+            
+            EventBus<NothingFoundEvent>.Clear();
         }
     }
 }

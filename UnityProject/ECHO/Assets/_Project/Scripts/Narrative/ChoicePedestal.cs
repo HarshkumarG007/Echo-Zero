@@ -3,6 +3,7 @@ using EchoZero.Core;
 using EchoZero.Core.Events;
 using EchoZero.Core.Events.Narrative;
 using EchoZero.Gameplay.Recall;
+using EchoZero.Core.Events.Gameplay;
 using EchoZero.Narrative.Fragments;
 
 namespace EchoZero.Narrative
@@ -53,6 +54,7 @@ namespace EchoZero.Narrative
             }
             else
             {
+                EventBus<NothingFoundEvent>.Publish(new NothingFoundEvent());
                 Debug.Log($"[ChoicePedestal] Failed to validate choice: {_assignedFragment.fragmentId}");
             }
         }
