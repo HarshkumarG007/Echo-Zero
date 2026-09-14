@@ -9,10 +9,10 @@
 
 | Field | Value |
 |-------|-------|
-| Phase | P3 — Build |
+| Phase | P4 — Vertical Slice |
 | Started | 2026-09-14 |
 | Target completion | TBD (task-driven, not calendar-driven) |
-| Blocking task | None (Phase 3 Core Gameplay Complete) |
+| Blocking task | None |
 | Last updated | 2026-09-14 |
 
 ---
@@ -25,7 +25,7 @@
 | G1 | Architecture | ✅ PASS | 10 ADRs, ARCHITECTURE.md, layer model |
 | G2 | Foundation | ✅ PASS | 14 repo files, antigravity.project.json, TASKS.md |
 | G3 | Core Gameplay | ✅ PASS | Tasks 1-8 completed, tested, and committed |
-| G4 | Vertical Slice | ⬜ NOT STARTED | — |
+| G4 | Vertical Slice | 🔄 IN PROGRESS | Tasks 9-11 completed |
 | G5 | Performance | ⬜ NOT STARTED | — |
 | G6 | AI | ⬜ NOT STARTED | — |
 | G7 | ML Evaluation | ➖ NOT APPLICABLE | Conditional on Phase 6 baseline |
@@ -49,6 +49,9 @@
 | TASK-006 | NarrativeState + flag system | ✅ Complete | GAMEPLAY_ENGINEER |
 | TASK-007 | ReconstructionAnchor + world-build | ✅ Complete | GAMEPLAY_ENGINEER |
 | TASK-008 | Mira stub NPC + dialogue display | ✅ Complete | GAMEPLAY_ENGINEER |
+| TASK-009 | Basic UI (HUD & Dialogue Display) | ✅ Complete | UI_ENGINEER |
+| TASK-010 | The Drift Encounter (FSM) | ✅ Complete | AI_ENGINEER |
+| TASK-011 | The Choice Interaction | ✅ Complete | GAMEPLAY_ENGINEER |
 
 ---
 
