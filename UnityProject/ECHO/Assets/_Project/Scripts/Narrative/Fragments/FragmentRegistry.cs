@@ -13,11 +13,13 @@ namespace EchoZero.Narrative.Fragments
     {
         private readonly Dictionary<string, MemoryFragmentSO> _allFragments = new();
         private readonly HashSet<string> _collectedFragmentIds = new();
+        private readonly List<string> _collectedOrder = new();
         
         // Key is the conflicting fragment ID, Value is the list of fragments in contradiction state
         private readonly Dictionary<string, string> _activeContradictions = new();
 
         public bool IsPlayerMustChooseState { get; private set; }
+        public IReadOnlyList<string> CollectionHistory => _collectedOrder;
 
         public FragmentRegistry(IEnumerable<MemoryFragmentSO> fragments)
         {
@@ -51,6 +53,7 @@ namespace EchoZero.Narrative.Fragments
             }
 
             _collectedFragmentIds.Add(evt.FragmentId);
+            _collectedOrder.Add(evt.FragmentId);
 
             // Check for contradiction
             if (!string.IsNullOrEmpty(fragment.contradictsFragmentId) &&
@@ -73,6 +76,7 @@ namespace EchoZero.Narrative.Fragments
 
             // Invalidate the conflicting fragment
             _collectedFragmentIds.Remove(conflictingFragmentId);
+            _collectedOrder.Remove(conflictingFragmentId);
             
             // Resolve the contradiction
             _activeContradictions.Remove(chosenFragmentId);

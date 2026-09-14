@@ -54,6 +54,15 @@ namespace EchoZero.Narrative.Mira
                 return "The path is clear now. You're getting closer.";
             }
 
+            // Check fragment order based on registry history
+            if (_fragmentRegistry != null && _fragmentRegistry.CollectionHistory.Count > 0)
+            {
+                string lastFragment = _fragmentRegistry.CollectionHistory[_fragmentRegistry.CollectionHistory.Count - 1];
+                if (lastFragment == "Fragment_A") return "That memory... it feels heavy. Are you sure it's yours?";
+                if (lastFragment == "Fragment_B") return "A bright shard. It almost hurts to look at.";
+                if (lastFragment == "Fragment_01") return "You found a piece of it. There is more out there.";
+            }
+
             if (_narrativeState.HasFlag(NarrativeFlags.Fragment01Collected))
             {
                 return "You found a piece of it. There is more out there.";
