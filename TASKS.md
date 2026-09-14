@@ -158,7 +158,7 @@ First five tasks only, in dependency order, small enough for one agent session e
 
 ---
 
-### TASK-012: Aerie Scene Streaming
+### [x] TASK-012: Aerie Scene Streaming
 
 **Objective:** Implement additive scene loading to divide the Aerie into `Upper` and `Lower` environments (per ADR). Streaming is narratively justified (ECHO only remembers what's nearby) and technically required.
 
@@ -172,7 +172,7 @@ First five tasks only, in dependency order, small enough for one agent session e
 
 ---
 
-### TASK-013: Pause Menu & State Management
+### [x] TASK-013: Pause Menu & State Management
 
 **Objective:** Implement the pause state (`Time.timeScale = 0`) and the Pause Menu UI. This menu must allow the player to trigger `SaveService.SaveGame()` and resume.
 
@@ -186,7 +186,7 @@ First five tasks only, in dependency order, small enough for one agent session e
 
 ---
 
-### TASK-014: The Reveal Sequence Manager
+### [x] TASK-014: The Reveal Sequence Manager
 
 **Objective:** Build the manager that handles the final narrative reveal. This sequence triggers when entering the core chamber, sets the `RevealTriggered` flag in `NarrativeState`, removes/disables Mira, and rolls the closing state.
 
