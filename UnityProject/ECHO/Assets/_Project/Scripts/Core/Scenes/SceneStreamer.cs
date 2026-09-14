@@ -29,8 +29,7 @@ namespace EchoZero.Core.Scenes
 
         private void OnTriggerEnter(Collider other)
         {
-            // Usually we'd check for a Player tag or component here.
-            if (other.CompareTag("Player") || other.GetComponent<EchoZero.Gameplay.PlayerController>() != null)
+            if (other.CompareTag("Player"))
             {
                 if (!_isLoaded && !string.IsNullOrEmpty(_sceneToLoad))
                 {

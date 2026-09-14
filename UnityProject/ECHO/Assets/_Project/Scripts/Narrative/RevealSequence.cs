@@ -21,7 +21,7 @@ namespace EchoZero.Narrative
         {
             if (_hasTriggered) return;
 
-            if (other.CompareTag("Player") || other.GetComponent<EchoZero.Gameplay.PlayerController>() != null)
+            if (other.CompareTag("Player"))
             {
                 TriggerReveal();
             }
