@@ -4,7 +4,7 @@ using EchoZero.Gameplay.Recall;
 namespace EchoZero.AI.Drift
 {
     /// <summary>
-    /// MonoBehaviour for the Drift NPC. Integrates DriftStateMachine and IRecallable.
+    /// MonoBehaviour for the Drift NPC. Integrates DriftUtilityBrain and IRecallable.
     /// TASK: TASK-010
     /// </summary>
     public class DriftController : MonoBehaviour, IRecallable

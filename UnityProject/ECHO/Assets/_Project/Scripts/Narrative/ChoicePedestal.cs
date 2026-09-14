@@ -26,10 +26,9 @@ namespace EchoZero.Narrative
         {
             if (_isLocked || _assignedFragment == null) return;
 
-            var registry = ServiceLocator.Get<FragmentRegistry>();
-            if (registry == null)
+            if (!ServiceLocator.TryGet<FragmentRegistry>(out var registry))
             {
-                Debug.LogWarning("[ChoicePedestal] FragmentRegistry not found.");
+                Debug.LogWarning("[ChoicePedestal] FragmentRegistry not registered.");
                 return;
             }
 

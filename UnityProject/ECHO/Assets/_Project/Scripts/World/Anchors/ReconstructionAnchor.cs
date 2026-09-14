@@ -26,10 +26,9 @@ namespace EchoZero.World.Anchors
         {
             if (_isRebuilt || _anchorData == null) return;
 
-            var registry = ServiceLocator.Get<FragmentRegistry>();
-            if (registry == null)
+            if (!ServiceLocator.TryGet<FragmentRegistry>(out var registry))
             {
-                Debug.LogWarning("[ReconstructionAnchor] FragmentRegistry not found.");
+                Debug.LogWarning("[ReconstructionAnchor] FragmentRegistry not registered.");
                 return;
             }
 

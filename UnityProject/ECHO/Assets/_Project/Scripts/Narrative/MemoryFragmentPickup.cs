@@ -28,13 +28,15 @@ namespace EchoZero.Narrative
         {
             if (_fragment != null)
             {
-                ServiceLocator.Get<EchoZero.Core.WorldState.WorldState>()?.RegisterFragment(ObjectId, _fragment.fragmentId);
+                if (ServiceLocator.TryGet<EchoZero.Core.WorldState.WorldState>(out var ws))
+                    ws.RegisterFragment(ObjectId, _fragment.fragmentId);
             }
         }
 
         private void OnDestroy()
         {
-            ServiceLocator.Get<EchoZero.Core.WorldState.WorldState>()?.UnregisterFragment(ObjectId);
+            if (ServiceLocator.TryGet<EchoZero.Core.WorldState.WorldState>(out var worldState))
+                worldState.UnregisterFragment(ObjectId);
         }
 
         // ------------------------------------------------------------------ //
@@ -60,8 +62,8 @@ namespace EchoZero.Narrative
             _collected = true;
 
             // Set narrative flag
-            var narrative = ServiceLocator.Get<NarrativeState>();
-            if (!string.IsNullOrEmpty(_fragment.narrativeFlagOnCollect))
+            if (ServiceLocator.TryGet<NarrativeState>(out var narrative) &&
+                !string.IsNullOrEmpty(_fragment.narrativeFlagOnCollect))
                 narrative.SetFlag(_fragment.narrativeFlagOnCollect);
 
             // Publish collection event
@@ -71,7 +73,10 @@ namespace EchoZero.Narrative
             });
 
             // Telemetry
-            ServiceLocator.Get<ITelemetryService>().TrackFragmentCollected(_fragment.fragmentId);
+            if (ServiceLocator.TryGet<ITelemetryService>(out var telemetry))
+                telemetry.TrackFragmentCollected(_fragment.fragmentId);
+            else
+                Debug.LogWarning("[MemoryFragmentPickup] ITelemetryService not registered.");
 
             // Hide visual
             if (_visual != null) _visual.SetActive(false);

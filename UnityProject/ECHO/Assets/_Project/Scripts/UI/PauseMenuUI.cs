@@ -69,14 +69,13 @@ namespace EchoZero.UI
 
         private void OnResumeClicked()
         {
-            var gameState = ServiceLocator.Get<GameStateManager>();
-            gameState?.SetPause(false);
+            if (ServiceLocator.TryGet<GameStateManager>(out var gameState))
+                gameState.SetPause(false);
         }
 
         private void OnSaveClicked()
         {
-            var saveService = ServiceLocator.Get<ISaveService>();
-            if (saveService != null)
+            if (ServiceLocator.TryGet<ISaveService>(out var saveService))
             {
                 saveService.SaveGame();
                 Debug.Log("[PauseMenuUI] Game saved from pause menu.");

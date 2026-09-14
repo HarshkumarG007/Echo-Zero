@@ -43,8 +43,7 @@ namespace EchoZero.UI
             _sfxVolumeSlider = root.Q<Slider>("sfx-volume-slider");
             _closeButton = root.Q<Button>("settings-close-button");
 
-            var settingsManager = ServiceLocator.Get<SettingsManager>();
-            if (settingsManager != null)
+            if (ServiceLocator.TryGet<SettingsManager>(out var settingsManager))
             {
                 if (_masterVolumeSlider != null) _masterVolumeSlider.value = settingsManager.CurrentSettings.MasterVolume;
                 if (_musicVolumeSlider != null) _musicVolumeSlider.value = settingsManager.CurrentSettings.MusicVolume;
@@ -59,13 +58,12 @@ namespace EchoZero.UI
 
         private void OnVolumeChanged(ChangeEvent<float> evt)
         {
-            var settingsManager = ServiceLocator.Get<SettingsManager>();
-            if (settingsManager != null)
+            if (ServiceLocator.TryGet<SettingsManager>(out var settingsManager))
             {
                 float master = _masterVolumeSlider != null ? _masterVolumeSlider.value : 1f;
-                float music = _musicVolumeSlider != null ? _musicVolumeSlider.value : 1f;
-                float sfx = _sfxVolumeSlider != null ? _sfxVolumeSlider.value : 1f;
-                
+                float music  = _musicVolumeSlider  != null ? _musicVolumeSlider.value  : 1f;
+                float sfx    = _sfxVolumeSlider    != null ? _sfxVolumeSlider.value    : 1f;
+
                 settingsManager.SetVolume(master, music, sfx);
             }
         }

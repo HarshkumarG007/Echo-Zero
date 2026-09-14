@@ -53,8 +53,8 @@ namespace EchoZero.Gameplay.Recall
             }
             
             // Check WorldState for a fragment
-            var worldState = ServiceLocator.Get<EchoZero.Core.WorldState.WorldState>();
-            if (worldState != null && worldState.TryGetFragment(target.ObjectId, out string fragmentId))
+            if (ServiceLocator.TryGet<EchoZero.Core.WorldState.WorldState>(out var worldState)
+                && worldState.TryGetFragment(target.ObjectId, out string fragmentId))
             {
                 EventBus<FragmentFoundEvent>.Publish(new FragmentFoundEvent { FragmentId = fragmentId });
                 Debug.Log($"[RecallSystem][Debug] FragmentFoundEvent published: {fragmentId}");
