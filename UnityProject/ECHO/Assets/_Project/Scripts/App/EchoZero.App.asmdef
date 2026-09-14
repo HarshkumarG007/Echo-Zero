@@ -1,0 +1,19 @@
+﻿{
+  "name": "EchoZero.App",
+  "rootNamespace": "EchoZero.App",
+  "references": [
+    "EchoZero.Core",
+    "EchoZero.Gameplay",
+    "EchoZero.Narrative",
+    "EchoZero.Data"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

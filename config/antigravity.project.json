@@ -1,0 +1,334 @@
+﻿{
+  "_comment": "ECHO//ZERO — Project Control Manifest v1.0",
+  "_note": "This file is the human-and-agent-readable source of truth for project configuration.",
+  "_antigravity_note": "Google Antigravity does not have an official JSON schema for this file. Fields under 'antigravity' are project conventions, not Antigravity API keys. Verify Antigravity workspace rules location against current docs (GEMINI.md takes precedence over AGENTS.md in Antigravity 2.0).",
+
+  "project": {
+    "name": "ECHO//ZERO",
+    "version": "0.1.0-phase3",
+    "phase": "Phase 3 — Build",
+    "description": "Sci-fi/fantasy mystery game. A grieving AI reconstructs reality from memories. 20-30 min vertical slice target.",
+    "design_thesis": "The smallest possible system that proves the largest possible idea. One verb (RECALL). One environment (The Aerie). One emotional truth.",
+    "target_completion": "Vertical slice playable end-to-end",
+    "license": "All rights reserved (portfolio project)",
+    "repository": "https://github.com/[YOUR_USERNAME]/echo-zero"
+  },
+
+  "hardware": {
+    "dev_machine": "Lenovo Legion Pro 5i",
+    "cpu": "Intel i7-14650HX",
+    "gpu": "NVIDIA RTX 4060 Laptop",
+    "vram_gb": 8,
+    "ram_gb": 16,
+    "storage": "NVMe SSD",
+    "os": "Windows"
+  },
+
+  "tools": {
+    "unity_version": "6.3 LTS",
+    "render_pipeline": "URP",
+    "input_system": "Unity Input System (new)",
+    "ui_system": "UI Toolkit",
+    "test_framework": "Unity Test Framework",
+    "mock_library": "NSubstitute",
+    "primary_agentic_env": "Google Antigravity",
+    "secondary_agentic_env": "Claude Code",
+    "ai_plan": "Google AI Pro (Gemini, AI Studio, Colab)",
+    "version_control": "Git",
+    "VERIFY_CURRENT_CAPABILITY": [
+      "Exact Cinemachine version for Unity 6.3 LTS",
+      "NSubstitute AOT/IL2CPP compatibility with Unity 6.3",
+      "UI Toolkit data-binding API surface in Unity 6.3",
+      "Antigravity AGENTS.md vs GEMINI.md precedence in current Antigravity 2.0 release"
+    ]
+  },
+
+  "architecture": {
+    "pattern": "Layered architecture with strict one-way dependency flow",
+    "layers": [
+      "Presentation",
+      "Gameplay",
+      "GameSystems",
+      "World",
+      "AI",
+      "Data",
+      "Core",
+      "Observability"
+    ],
+    "event_system": "Typed EventBus<T> where T : struct",
+    "dependency_injection": "ServiceLocator (hand-rolled, explicit registration)",
+    "scene_loading": "Additive only — never single-mode after bootstrap",
+    "config_format": "ScriptableObjects for static data, JSON for runtime config",
+    "save_format": "JSON (System.Text.Json with source-gen) + SHA-256 checksum"
+  },
+
+  "principles": [
+    "One verb, many uses — RECALL is the single mechanical thread",
+    "Grief, not conspiracy — the emotional engine is loss, not mystery-box villainy",
+    "Restraint is the flex — the vertical slice proves the idea, not the universe",
+    "Build for the laptop — every decision is constrained by RTX 4060 / 16 GB RAM",
+    "Plan before code — no agent skips PLAN step",
+    "Test before commit — no code lands without a corresponding test",
+    "ADR before override — no silent architectural changes"
+  ],
+
+  "directories": {
+    "root": "Echo/",
+    "unity_project": "Echo/UnityProject/",
+    "scripts_root": "Echo/UnityProject/Assets/_Project/Scripts/",
+    "tests_root": "Echo/UnityProject/Assets/Tests/",
+    "scriptable_objects": "Echo/UnityProject/Assets/_Project/ScriptableObjects/",
+    "scenes": "Echo/UnityProject/Assets/_Project/Scenes/",
+    "config": "Echo/config/",
+    "docs": "Echo/docs/"
+  },
+
+  "phases": [
+    {
+      "id": "P0",
+      "name": "Discovery",
+      "status": "complete",
+      "deliverable": "Design thesis, pillars, vertical slice concept"
+    },
+    {
+      "id": "P1",
+      "name": "Architecture",
+      "status": "complete",
+      "deliverable": "ARCHITECTURE.md, 10 ADRs, layer model, system contracts"
+    },
+    {
+      "id": "P2",
+      "name": "Foundation",
+      "status": "complete",
+      "deliverable": "AGENTS.md, DECISIONS.md, TASKS.md, antigravity.project.json, repo structure"
+    },
+    {
+      "id": "P3",
+      "name": "Build — Core Gameplay",
+      "status": "in_progress",
+      "deliverable": "Unity project, EventBus, ServiceLocator, Bootstrap, Player, RECALL, Fragment pickup"
+    },
+    {
+      "id": "P4",
+      "name": "Vertical Slice",
+      "status": "planned",
+      "deliverable": "Full Aerie playable: Mira, Drift, Choice, Reveal"
+    },
+    {
+      "id": "P5",
+      "name": "Polish",
+      "status": "planned",
+      "deliverable": "Visual polish, audio, UX, accessibility"
+    },
+    {
+      "id": "P6",
+      "name": "AI",
+      "status": "planned",
+      "deliverable": "Level 1-2 AI — improved Drift, Mira adaptation"
+    },
+    {
+      "id": "P7",
+      "name": "ML Experiments",
+      "status": "conditional",
+      "deliverable": "First learned component — only if P6 baseline measured"
+    },
+    {
+      "id": "P8",
+      "name": "Evaluation",
+      "status": "conditional",
+      "deliverable": "Experiment registry, benchmarks, AI evaluation"
+    },
+    {
+      "id": "P9",
+      "name": "Red Team",
+      "status": "planned",
+      "deliverable": "Security audit, save corruption tests, safety review"
+    },
+    {
+      "id": "P10",
+      "name": "Release",
+      "status": "planned",
+      "deliverable": "Build pipeline, packaging, release notes"
+    },
+    {
+      "id": "P11",
+      "name": "Portfolio",
+      "status": "planned",
+      "deliverable": "README, architecture article, demo script, resume bullets"
+    }
+  ],
+
+  "tasks": {
+    "active_phase": "P3",
+    "task_file": "Echo/TASKS.md",
+    "current_tasks": ["TASK-001", "TASK-002", "TASK-003", "TASK-004", "TASK-005"],
+    "workflow": ["PLAN", "TASK", "IMPLEMENT", "TEST", "REVIEW", "VERIFY", "COMMIT"]
+  },
+
+  "agents": [
+    {
+      "role": "ARCHITECT",
+      "owns": ["System design", "ADRs", "ARCHITECTURE.md"],
+      "may_not": ["Write gameplay code"]
+    },
+    {
+      "role": "UNITY_ENGINEER",
+      "owns": ["Unity project setup", "packages", "build", "Bootstrap"],
+      "may_not": ["Design new systems without an ADR"]
+    },
+    {
+      "role": "GAMEPLAY_ENGINEER",
+      "owns": ["Player", "RECALL", "Interaction", "Drift encounter"],
+      "may_not": ["Touch Core/ without architect approval"]
+    },
+    {
+      "role": "AI_ENGINEER",
+      "owns": ["Drift FSM", "Mira dialogue logic"],
+      "may_not": ["Add ML dependencies without ML_ENGINEER sign-off"]
+    },
+    {
+      "role": "QA_ENGINEER",
+      "owns": ["Tests", "acceptance criteria"],
+      "may_not": ["Modify production code directly"]
+    },
+    {
+      "role": "PERFORMANCE_ENGINEER",
+      "owns": ["Profiling", "budgets"],
+      "may_not": ["Change architecture to hit a budget without a new ADR"]
+    },
+    {
+      "role": "DOCUMENTATION_ENGINEER",
+      "owns": ["All .md files", "code comments"],
+      "may_not": ["Change production code"]
+    },
+    {
+      "role": "REVIEWER",
+      "owns": ["Code review before integration"],
+      "may_not": ["Approve their own work"]
+    }
+  ],
+
+  "quality_gates": [
+    { "id": "G0", "name": "Idea Validation", "status": "PASS", "evidence": "Design thesis, kill-critic review, Phase 1 complete" },
+    { "id": "G1", "name": "Architecture", "status": "PASS", "evidence": "10 ADRs, layer model, ARCHITECTURE.md complete" },
+    { "id": "G2", "name": "Foundation", "status": "PASS", "evidence": "AGENTS.md, TASKS.md, DECISIONS.md, this file" },
+    { "id": "G3", "name": "Core Gameplay", "status": "NOT_STARTED", "evidence": null },
+    { "id": "G4", "name": "Vertical Slice", "status": "NOT_STARTED", "evidence": null },
+    { "id": "G5", "name": "Performance", "status": "NOT_STARTED", "evidence": null },
+    { "id": "G6", "name": "AI", "status": "NOT_STARTED", "evidence": null },
+    { "id": "G7", "name": "ML Evaluation", "status": "NOT_APPLICABLE", "evidence": "Deferred to Phase 7 — conditional" },
+    { "id": "G8", "name": "Security", "status": "NOT_STARTED", "evidence": null },
+    { "id": "G9", "name": "Safety", "status": "NOT_STARTED", "evidence": null },
+    { "id": "G10", "name": "Reproducibility", "status": "NOT_STARTED", "evidence": null },
+    { "id": "G11", "name": "Documentation", "status": "NOT_STARTED", "evidence": null },
+    { "id": "G12", "name": "Release", "status": "NOT_STARTED", "evidence": null }
+  ],
+
+  "testing": {
+    "framework": "Unity Test Framework",
+    "mock_library": "NSubstitute",
+    "editmode_path": "Assets/Tests/EditMode/",
+    "playmode_path": "Assets/Tests/PlayMode/",
+    "naming_convention": "<ClassName>Tests.cs",
+    "rules": [
+      "Every class with business logic gets an EditMode test class",
+      "PlayMode tests for Unity lifecycle dependencies",
+      "No test may depend on scene state without explicit setup/teardown",
+      "Tests must be deterministic — no random seeds without fixed seed in test"
+    ]
+  },
+
+  "security": {
+    "no_hardcoded_credentials": true,
+    "save_file_checksummed": true,
+    "checksum_algorithm": "SHA-256",
+    "telemetry_no_pii": true,
+    "no_external_network_from_runtime_without_adr": true,
+    "threat_model_path": "docs/threat-model.md"
+  },
+
+  "safety": {
+    "ai_agents_phase": "Phase 6+ only",
+    "requirements_before_enabling_agents": [
+      "Bounded action space documented",
+      "Kill switch implemented",
+      "All decisions logged with timestamp",
+      "Human override available",
+      "Sandboxed from save file write access"
+    ]
+  },
+
+  "evaluation": {
+    "phase": "Phase 8 — conditional on Phase 6 baseline",
+    "experiment_registry": "Each experiment gets: experiment_id, hypothesis, env_version, agent_version, config, seed, metrics, results, artifacts, conclusion",
+    "evaluation_protocol_path": "docs/experiment-protocol.md"
+  },
+
+  "performance": {
+    "target_device": "RTX 4060 Laptop / 16 GB RAM / 8 GB VRAM",
+    "frame_time_budget_ms": 16.6,
+    "cpu_main_thread_budget_ms": 8,
+    "vram_budget_gb": 5,
+    "ram_budget_gb": 10,
+    "draw_calls_budget": 150,
+    "triangle_budget": 800000,
+    "max_texture_size": "2048x2048",
+    "profiler_markers_required_on": ["RecallSystem", "DriftFSM", "SaveService", "SceneLoader"]
+  },
+
+  "documentation": {
+    "agents_rules": "AGENTS.md",
+    "architecture": "ARCHITECTURE.md",
+    "decisions": "DECISIONS.md",
+    "tasks": "TASKS.md",
+    "roadmap": "ROADMAP.md",
+    "game_design": "docs/game-design.md",
+    "technical_design": "docs/technical-design.md",
+    "performance_budget": "docs/performance-budget.md",
+    "threat_model": "docs/threat-model.md"
+  },
+
+  "git": {
+    "commit_format": "<type>(<scope>): <short description>\n\n[optional body]\n\nTask: TASK-XXX",
+    "types": ["feat", "fix", "refactor", "test", "docs", "perf", "security", "research", "chore"],
+    "branch_strategy": "feature branches for tasks, main for verified integrations",
+    "forbidden": [
+      "Force-push to main",
+      "Secrets or API keys",
+      "Machine-local paths",
+      "Generated junk files",
+      "Commits without Task reference (except docs/chore)"
+    ]
+  },
+
+  "antigravity": {
+    "_note": "Configuration for agentic development using Google Antigravity. Fields here are project conventions, not Antigravity API schema.",
+    "workspace_rules_file": "AGENTS.md",
+    "VERIFY": "In Antigravity 2.0, verify whether AGENTS.md or GEMINI.md takes precedence and which path Antigravity reads workspace rules from. Update this field accordingly.",
+    "artifact_types_used": ["implementation_plan", "task_list", "walkthrough", "screenshot", "recording"],
+    "agent_handoff_protocol": {
+      "steps": ["TASK", "IMPLEMENTATION_REPORT", "TEST_REPORT", "REVIEW", "APPROVAL", "INTEGRATION"],
+      "each_handoff_contains": ["status", "changes", "tests", "unresolved_issues", "risks", "next_action"]
+    },
+    "forbidden_agent_behaviours": [
+      "Modify repository without reading AGENTS.md first",
+      "Execute arbitrary shell commands outside approved list",
+      "Skip PLAN step",
+      "Generate code without tests",
+      "Rewrite Git history"
+    ]
+  },
+
+  "definition_of_done": {
+    "required_for_every_task": [
+      "Implementation exists and compiles cleanly (zero errors, zero new warnings)",
+      "All acceptance criteria in task definition are met",
+      "Tests pass (EditMode and/or PlayMode as required)",
+      "No unrelated files were modified",
+      "TASKS.md status updated to [x]",
+      "Commit message follows format in git.commit_format",
+      "If new architectural decision made, ADR exists in DECISIONS.md",
+      "Performance impact is understood"
+    ]
+  }
+}

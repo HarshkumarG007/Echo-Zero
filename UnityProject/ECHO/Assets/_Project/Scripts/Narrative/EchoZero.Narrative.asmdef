@@ -1,0 +1,14 @@
+﻿{
+  "name": "EchoZero.Narrative",
+  "rootNamespace": "EchoZero.Narrative",
+  "references": ["EchoZero.Core", "EchoZero.Gameplay"],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

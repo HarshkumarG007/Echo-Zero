@@ -1,0 +1,14 @@
+﻿{
+  "name": "EchoZero.Data",
+  "rootNamespace": "EchoZero.Data",
+  "references": ["EchoZero.Core", "EchoZero.Narrative"],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

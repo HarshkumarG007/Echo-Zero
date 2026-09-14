@@ -1,0 +1,34 @@
+﻿name: "ECHO//ZERO"
+version: "0.1.0-phase3"
+phase: "P3 — Build"
+unity_version: "6.3 LTS"
+render_pipeline: "URP"
+target_platform: "PC (Windows)"
+
+design_thesis: >
+  The smallest possible system that proves the largest possible idea.
+  One verb (RECALL). One environment (The Aerie). One emotional truth.
+
+vertical_slice:
+  duration_minutes: 20-30
+  setting: "The Aerie — cliffside research station"
+  player_ability: "RECALL (single verb, multiple uses)"
+  npc: "Mira (ECHO's reconstruction of someone lost)"
+  encounter: "The Drift (stabilised via RECALL, not combat)"
+  puzzle: "Collapsed walkway — requires 3 corroborating fragments"
+  choice: "Two contradictory fragments about how real Mira left — one validated permanently"
+  reveal: "ZERO is ECHO's reconstruction of the same person as Mira"
+
+hardware_targets:
+  gpu: "RTX 4060 Laptop (8 GB VRAM)"
+  ram_gb: 16
+  os: "Windows"
+  fps_target: 60
+  vram_budget_gb: 5
+  ram_budget_gb: 10
+
+adr_count: 10
+task_count: 5
+quality_gates_passed: ["G0", "G1", "G2"]
+quality_gates_pending: ["G3", "G4", "G5", "G6", "G8", "G9", "G10", "G11", "G12"]
+quality_gates_not_applicable: ["G7"]
