@@ -32,7 +32,7 @@ First five tasks only, in dependency order, small enough for one agent session e
 
 ---
 
-### TASK-003: Player controller and Aerie gray-box
+### [x] TASK-003: Player controller and Aerie gray-box
 
 **Objective:** Basic movement and camera in a gray-boxed (untextured) version of the Aerie's first room — enough to walk the critical path of the slice end to end once other systems land.
 
