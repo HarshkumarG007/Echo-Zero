@@ -4,7 +4,7 @@ First five tasks only, in dependency order, small enough for one agent session e
 
 ---
 
-### TASK-001: Unity project scaffold
+### [x] TASK-001: Unity project scaffold
 
 **Objective:** Stand up the Unity 6.3 LTS / URP project with the five-folder structure from ADR-0003, an empty Aerie scene, and a git repo with `AGENTS.md` / `ARCHITECTURE.md` / `DECISIONS.md` at the root.
 
@@ -18,7 +18,7 @@ First five tasks only, in dependency order, small enough for one agent session e
 
 ---
 
-### TASK-002: Save/load round trip
+### [x] TASK-002: Save/load round trip
 
 **Objective:** Implement the JSON save/load path from ADR-0002 with a minimal `SaveData` class (player position, empty fragment list, empty settings) before there's real gameplay data, so the save path is tested from day one.
 
