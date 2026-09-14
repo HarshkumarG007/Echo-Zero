@@ -9,10 +9,10 @@
 
 | Field | Value |
 |-------|-------|
-| Phase | P5 — Polish |
+| Phase | P6 — AI |
 | Started | 2026-09-14 |
-| Target completion | Phase 5 Completed |
-| Blocking task | None (Phase 5 Polish Complete) |
+| Target completion | Phase 6 Completed |
+| Blocking task | None (Phase 6 AI Complete) |
 | Last updated | 2026-09-14 |
 
 ---
@@ -27,7 +27,7 @@
 | G3 | Core Gameplay | ✅ PASS | Tasks 1-8 completed, tested, and committed |
 | G4 | Vertical Slice | ✅ PASS | Tasks 9-14 completed, tested, and committed |
 | G5 | Performance & Polish | ✅ PASS | Tasks 15-18 completed, tested, and committed |
-| G6 | AI | ⬜ NOT STARTED | — |
+| G6 | AI | ✅ PASS | Tasks 19-21 completed, tested, and committed |
 | G7 | ML Evaluation | ➖ NOT APPLICABLE | Conditional on Phase 6 baseline |
 | G8 | Security | ⬜ NOT STARTED | — |
 | G9 | Safety | ⬜ NOT STARTED | — |
@@ -59,6 +59,9 @@
 | TASK-016 | Settings System & UI | ✅ Complete | UI_ENGINEER |
 | TASK-017 | UI Toolkit Polish (USS/Transitions) | ✅ Complete | UI_ENGINEER |
 | TASK-018 | VFX & Shader Controllers | ✅ Complete | PERFORMANCE_ENGINEER |
+| TASK-019 | Utility-Based AI for Drift | ✅ Complete | AI_ENGINEER |
+| TASK-020 | Advanced Mira Dialogue Logic | ✅ Complete | NARRATIVE_DIRECTOR |
+| TASK-021 | AI Analytics & Telemetry Baseline | ✅ Complete | ARCHITECT |
 
 ---
 

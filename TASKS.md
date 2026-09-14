@@ -253,3 +253,45 @@ First five tasks only, in dependency order, small enough for one agent session e
 **Acceptance criteria:** A MonoBehaviour that takes a renderer, material property name, target float value, and duration, and tweens it via Coroutine.
 
 **Test:** PlayMode or EditMode test verifying the material property reaches the target value.
+
+---
+
+### [x] TASK-019: Utility-Based AI for Drift (ADR-010)
+
+**Objective:** Replace the hardcoded `DriftStateMachine` with a dynamic Utility AI system. The Drift will score actions (Patrol, Pursue, Stabilize) based on environmental curves (e.g., Distance to Player, Recall Intensity) and execute the highest-scoring action.
+
+**Files:** `AI/Utility/UtilityAction.cs`, `AI/Utility/UtilityScorer.cs`, `AI/Drift/DriftUtilityBrain.cs`, `AI/Tests/DriftUtilityBrainTests.cs`.
+
+**Dependencies:** None.
+
+**Acceptance criteria:** Replaces `DriftStateMachine` inside `DriftController`. Executes the highest scored utility action. EditMode tests prove that actions correctly swap based on varying distance/recall inputs.
+
+**Test:** EditMode tests isolating the utility scorers and ensuring the correct action is selected.
+
+---
+
+### [x] TASK-020: Advanced Mira Dialogue Logic
+
+**Objective:** Upgrade `MiraDialogueSelector` to account for the exact sequence and contradiction weight of collected fragments.
+
+**Files:** `Narrative/Mira/MiraDialogueSelector.cs`, `Narrative/Tests/AdvancedMiraTests.cs`.
+
+**Dependencies:** TASK-005.
+
+**Acceptance criteria:** Mira queries `FragmentRegistry` for contradictions and order of collection, changing her default outputs if the player is in an active state of contradiction.
+
+**Test:** EditMode tests verifying Mira returns different dialogue strings based on `FragmentRegistry` state.
+
+---
+
+### [x] TASK-021: AI Analytics & Telemetry Baseline
+
+**Objective:** Create a local telemetry logger to record AI decisions, satisfying Phase 6 requirements.
+
+**Files:** `Core/Telemetry/LocalTelemetryService.cs`, `Core/Telemetry/Tests/TelemetryTests.cs`.
+
+**Dependencies:** None.
+
+**Acceptance criteria:** Subscribes to events (e.g., `DriftStabilizedEvent`, `ChoiceMadeEvent`) and logs a JSON payload to `Application.persistentDataPath/telemetry_session.json`.
+
+**Test:** EditMode tests verifying the file is created and populated with valid JSON upon receiving an event.
