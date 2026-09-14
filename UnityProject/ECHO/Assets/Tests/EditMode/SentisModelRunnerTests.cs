@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 using EchoZero.Core.ML;
-using Unity.Sentis;
+using Unity.InferenceEngine;
 
 namespace EchoZero.Tests.EditMode
 {

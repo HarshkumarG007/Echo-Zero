@@ -2,7 +2,7 @@
   "name": "EchoZero.Core",
   "rootNamespace": "EchoZero.Core",
   "references": [
-    "Unity.Sentis"
+    "Unity.InferenceEngine"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

@@ -13,7 +13,7 @@
     "Unity.InputSystem",
     "UnityEngine.TestRunner",
     "UnityEditor.TestRunner",
-    "Unity.Sentis"
+    "Unity.InferenceEngine"
   ],
   "includePlatforms": ["Editor"],
   "excludePlatforms": [],

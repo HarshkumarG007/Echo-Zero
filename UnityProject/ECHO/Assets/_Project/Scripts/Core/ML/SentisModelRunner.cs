@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using Unity.Sentis;
+using Unity.InferenceEngine;
 
 namespace EchoZero.Core.ML
 {
