@@ -24,7 +24,7 @@ namespace EchoZero.Tests.EditMode
             ServiceLocator.Register<ITelemetryService>(_mockTelemetry);
 
             _narrativeState = new NarrativeState();
-            _fragmentRegistry = ScriptableObject.CreateInstance<FragmentRegistry>();
+            _fragmentRegistry = new FragmentRegistry();
             _config = ScriptableObject.CreateInstance<MiraDialogueConfig>();
 
             // Setup identifiable lines in config
@@ -39,7 +39,7 @@ namespace EchoZero.Tests.EditMode
         public void TearDown()
         {
             ServiceLocator.Clear();
-            Object.DestroyImmediate(_fragmentRegistry);
+            _fragmentRegistry?.Dispose();
             Object.DestroyImmediate(_config);
         }
 
