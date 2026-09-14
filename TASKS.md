@@ -46,7 +46,7 @@ First five tasks only, in dependency order, small enough for one agent session e
 
 ---
 
-### TASK-004: RECALL skeleton
+### [x] TASK-004: RECALL skeleton
 
 **Objective:** The core verb, data-flow only — no visuals yet. Player targets an object, RECALL queries World State for a fragment, fires a stub event either way. This is the piece everything else attaches to.
 
