@@ -20,7 +20,7 @@ namespace EchoZero.Narrative
 
         public bool CanRecall => !_isLocked && _assignedFragment != null;
 
-        public string ObjectId => gameObject.GetInstanceID().ToString();
+        public string ObjectId => gameObject.GetHashCode().ToString();
 
         public void OnRecall()
         {

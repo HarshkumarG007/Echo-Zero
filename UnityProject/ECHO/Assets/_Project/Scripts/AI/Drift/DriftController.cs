@@ -15,7 +15,7 @@ namespace EchoZero.AI.Drift
         private float _lastRecallTime = -1f;
 
         public bool CanRecall => _stateMachine != null && _stateMachine.CurrentState != DriftState.Stabilized;
-        public string ObjectId => gameObject.GetInstanceID().ToString();
+        public string ObjectId => gameObject.GetHashCode().ToString();
         public DriftState CurrentState => _stateMachine.CurrentState;
 
         private void Awake()

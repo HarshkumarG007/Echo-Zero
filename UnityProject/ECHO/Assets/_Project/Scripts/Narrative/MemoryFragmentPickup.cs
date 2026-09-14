@@ -42,7 +42,7 @@ namespace EchoZero.Narrative
         // ------------------------------------------------------------------ //
 
         /// <inheritdoc/>
-        public string ObjectId => gameObject.GetInstanceID().ToString();
+        public string ObjectId => gameObject.GetHashCode().ToString();
 
         /// <inheritdoc/>
         public bool CanRecall => !_collected && _fragment != null;

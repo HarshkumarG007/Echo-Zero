@@ -20,7 +20,7 @@ namespace EchoZero.World.Anchors
 
         public bool CanRecall => !_isRebuilt && _anchorData != null;
 
-        public string ObjectId => gameObject.GetInstanceID().ToString();
+        public string ObjectId => gameObject.GetHashCode().ToString();
 
         public void OnRecall()
         {
