@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using EchoZero.Core;
 using EchoZero.Core.Events;
+using EchoZero.Data.Save;
 
 namespace EchoZero.UI
 {
@@ -77,7 +78,7 @@ namespace EchoZero.UI
         {
             if (ServiceLocator.TryGet<ISaveService>(out var saveService))
             {
-                saveService.SaveGame();
+                saveService.Save(new GameSaveData());
                 Debug.Log("[PauseMenuUI] Game saved from pause menu.");
             }
             else

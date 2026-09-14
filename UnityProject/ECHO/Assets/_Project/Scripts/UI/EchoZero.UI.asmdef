@@ -3,7 +3,8 @@
   "rootNamespace": "EchoZero.UI",
   "references": [
     "EchoZero.Core",
-    "EchoZero.Narrative"
+    "EchoZero.Narrative",
+    "EchoZero.Data"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

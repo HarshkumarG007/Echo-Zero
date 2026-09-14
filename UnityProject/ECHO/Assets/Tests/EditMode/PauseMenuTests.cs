@@ -3,6 +3,7 @@ using NUnit.Framework;
 using UnityEngine;
 using EchoZero.Core;
 using EchoZero.Core.Events;
+using EchoZero.Data.Save;
 using EchoZero.UI;
 
 namespace EchoZero.Tests.EditMode
@@ -62,7 +63,7 @@ namespace EchoZero.Tests.EditMode
             var onSaveMethod = typeof(PauseMenuUI).GetMethod("OnSaveClicked", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             onSaveMethod?.Invoke(ui, null);
 
-            saveServiceMock.Received(1).SaveGame();
+            saveServiceMock.Received(1).Save(Arg.Any<GameSaveData>());
 
             Object.DestroyImmediate(go);
         }
