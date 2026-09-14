@@ -1,128 +1,44 @@
-﻿# README.md — ECHO//ZERO
-
-<div align="center">
-
 # ECHO//ZERO
 
-*A grieving AI reconstructs reality from memories.*
-*The player discovers they are made of the same grief.*
+> **"You are made of the same grief you are trying to resolve."**
 
-**Unity 6.3 LTS · URP · Phase 3: Build**
+**ECHO//ZERO** is a Unity 6 (URP) sci-fi/fantasy mystery vertical slice that doubles as a technical showcase for **local machine learning integration** and **AI-agentic software engineering**. 
 
-</div>
-
----
-
-## What is this?
-
-**ECHO//ZERO** is a 20–30 minute sci-fi/fantasy mystery vertical slice built in Unity.
-
-You play as **ZERO** — a reconstruction assembled by an AI named **ECHO** who is trying to hold onto someone it lost. Your single ability, **RECALL**, lets you focus on objects and places to make ECHO rebuild its memories of them. The world literally assembles itself around what you choose to remember.
-
-The setting is **The Aerie** — a cliffside research station half-reclaimed by crystalline memory-formations that grow like coral wherever ECHO's reconstruction is active.
-
-By the end of the slice, you understand what ZERO is, what ECHO lost, and why you were built.
+Developed from architecture to final IL2CPP build using [Google Antigravity](https://deepmind.google/technologies/antigravity/) and Google AI Pro, this repository demonstrates how modern autonomous coding agents can adhere to strict architectural constraints (ADRs), maintain performance budgets, and build stable, test-driven gameplay systems.
 
 ---
 
-## Why does this project exist?
+## Technical Highlights
 
-Three reasons:
+### 1. Local ML Inference (Unity Sentis)
+We bypassed cloud API dependency by embedding lightweight ONNX neural networks directly into the game using **Unity Sentis**, maintaining a strict < 1.0ms AI compute budget per frame on local GPU hardware.
+- **ML Pursuit AI:** The Drift enemy utilizes a trained model to predict the player's trajectory, replacing rigid A* pathing with dynamic interception.
+- **Adaptive Narrative:** Mira, the companion NPC, alters her dialogue weights based on an `AggressionScore` telemetry model derived from the player's playstyle.
 
-1. **It is a game worth making.** The premise — an AI's grief as the engine of a world — is emotionally specific enough to be memorable and mechanically tractable enough to actually finish.
+### 2. Utility-Based AI
+Replaced a traditional Finite State Machine with a **Utility Brain** architecture for enemies. Actions (Patrol, Pursue, Stabilize) are scored dynamically via animation curves evaluating player distance and RECALL intensity, resulting in highly emergent combat encounters.
 
-2. **It is a disciplined engineering demonstration.** The goal is not "AI built a game." The goal is: one developer, using AI-assisted engineering correctly, ships a technically clean vertical slice with tests, ADRs, measured performance, and zero speculative scope.
+### 3. Decoupled Architecture
+- **Service Locator:** All core systems (Save, Telemetry, Config, Narrative) are decoupled and injected via a Service Locator pattern.
+- **Event Bus:** Cross-system communication relies entirely on strongly typed structs passing through a central Event Bus, eliminating `SendMessage` and tightly coupled `MonoBehaviour` references.
+- **Save Security:** Checksum-validated (SHA-256) JSON serialization protects narrative progression and gracefully resets corrupted states.
 
-3. **It is a research platform foundation.** The layered architecture is designed so that AI/ML experimentation can be added in Phase 6–8 without rewriting the game. The evaluation infrastructure comes after the baseline, not before.
-
----
-
-## Repository Structure
-
-```
-Echo/
-├── AGENTS.md              ← Agent rules — READ FIRST before touching code
-├── ARCHITECTURE.md        ← System architecture
-├── DECISIONS.md           ← Architecture Decision Records (ADRs)
-├── TASKS.md               ← Active task backlog
-├── ROADMAP.md             ← Phase roadmap
-├── CODING_STANDARDS.md
-├── SECURITY.md
-├── TESTING.md
-├── config/
-│   ├── project.yaml
-│   └── antigravity.project.json  ← Machine-readable project manifest
-├── docs/
-│   ├── game-design.md
-│   ├── technical-design.md
-│   ├── ai-architecture.md
-│   └── performance-budget.md
-└── UnityProject/
-    └── Assets/
-        ├── _Project/Scripts/     ← Layered C# — Core, Gameplay, World, Narrative, AI, Data, UI
-        └── Tests/                ← EditMode + PlayMode test assemblies
-```
+### 4. Agentic Development Workflow
+This project was built strictly adhering to `AGENTS.md` rules. Every feature was preceded by an Architectural Decision Record (ADR), developed via Test-Driven Development (NUnit/EditMode), and measured against strict performance gates.
 
 ---
 
-## Current Status
+## Repository Map
+- `AGENTS.md` - The foundational rulebook for AI agents modifying this repository.
+- `ARCHITECTURE.md` - High-level system interaction and data flow diagrams.
+- `DECISIONS.md` - The architectural decision records (ADRs) logging *why* we built it this way.
+- `TASKS.md` - The historical backlog of all 38 executed feature tasks.
+- `docs/portfolio/` - Devlogs, demo scripts, and STAR-format interview talking points.
 
-| Phase | Name | Status |
-|-------|------|--------|
-| P0 | Discovery | ✅ Complete |
-| P1 | Architecture | ✅ Complete |
-| P2 | Foundation | ✅ Complete |
-| **P3** | **Build — Core Gameplay** | 🔨 **In Progress** |
-| P4 | Vertical Slice | 📋 Planned |
-| P5–P11 | Polish → Portfolio | 📋 Planned |
-
-**Active tasks**: TASK-001 through TASK-005 (see [TASKS.md](TASKS.md))
-
----
-
-## Technology Stack
-
-| Concern | Technology |
-|---------|-----------|
-| Engine | Unity 6.3 LTS |
-| Render Pipeline | URP |
-| Input | Unity Input System |
-| UI | UI Toolkit |
-| Events | Typed EventBus\<T\> (hand-rolled) |
-| DI | ServiceLocator (hand-rolled) |
-| Testing | Unity Test Framework + NSubstitute |
-| Serialization | System.Text.Json (saves) + JsonUtility (config) |
-| AI (Phase 3) | FSM (plain C#) — Level 0/1 only |
-| Dev tooling | Google Antigravity + Google AI Pro |
+## Building and Running
+1. Open the project in **Unity 6.3 LTS (URP)**.
+2. Open `Assets/_Project/World/Scenes/Bootstrap.unity`.
+3. Press Play, or use the `ECHO//ZERO > Build Windows 64-bit (IL2CPP)` menu item to generate a standalone executable.
 
 ---
-
-## For AI Coding Agents
-
-Read [AGENTS.md](AGENTS.md) **before modifying any file**.
-
-The mandatory workflow is:
-
-```
-PLAN → TASK → IMPLEMENT → TEST → REVIEW → VERIFY → COMMIT
-```
-
-One task at a time. Tests before commits. ADR before any architectural change. No exceptions.
-
----
-
-## For Hiring Managers
-
-This project demonstrates:
-
-- **Disciplined agentic engineering** — AI agents accelerate implementation; humans own direction and acceptance criteria
-- **Architecture-first thinking** — 10 ADRs written before any gameplay code
-- **Hardware-aware design** — every budget decision is anchored to a real RTX 4060 laptop
-- **Scope control** — a vertical slice that proves the idea without scaling to an impossible universe
-- **Testability as a constraint** — no code without a corresponding test class
-
-The engineering decisions are more important than the amount of code.
-
----
-
-*Phase 3 in progress. See TASKS.md for what is being built right now.*
+*Created as a demonstration of Google Antigravity Advanced Agentic Coding.*

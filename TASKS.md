@@ -477,3 +477,59 @@ First five tasks only, in dependency order, small enough for one agent session e
 **Acceptance criteria:** Draft marketing copy, technical highlights, and installation instructions for an itch.io release.
 
 **Test:** N/A (Documentation).
+
+---
+
+### [x] TASK-035: Project README Overhaul
+
+**Objective:** Update `README.md` to highlight the ML integrations, architecture, and agentic workflow.
+
+**Files:** `README.md`.
+
+**Dependencies:** None.
+
+**Acceptance criteria:** `README.md` acts as a technical summary of the shipped vertical slice.
+
+**Test:** N/A.
+
+---
+
+### [x] TASK-036: Devlog / Architecture Retrospective
+
+**Objective:** Write a deep-dive article detailing our architectural decisions, what worked, and what didn't.
+
+**Files:** `docs/portfolio/devlog-postmortem.md`.
+
+**Dependencies:** None.
+
+**Acceptance criteria:** Discuss the success of the ServiceLocator/EventBus decoupling, the friction of transitioning from FSM to Utility AI, and the constraints of running ML models locally via Sentis.
+
+**Test:** N/A.
+
+---
+
+### [x] TASK-037: Demo Recording Script
+
+**Objective:** Create a step-by-step script for recording a 20-minute gameplay and technical walkthrough video.
+
+**Files:** `docs/portfolio/demo-script.md`.
+
+**Dependencies:** None.
+
+**Acceptance criteria:** Choreograph a playthrough that explicitly highlights the ML Drift pursuit, the dynamic Mira dialogue, and the choice pedestal logic, providing voiceover cues for technical explanations.
+
+**Test:** N/A.
+
+---
+
+### [x] TASK-038: Career Assets (Resume & Interview)
+
+**Objective:** Extract metrics and map ADRs to STAR-format interview responses.
+
+**Files:** `docs/portfolio/career-assets.md`.
+
+**Dependencies:** None.
+
+**Acceptance criteria:** Concrete evidence-based bullet points and talking points for job applications and technical screens.
+
+**Test:** N/A.
