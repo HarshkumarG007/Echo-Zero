@@ -128,9 +128,9 @@
 
 ---
 
-## Phase 7 — ML Experiments (Conditional)
+## Phase 7 — ML Experiments (Conditional) ✅
 
-**Status**: Only begins if Phase 6 baseline shows a learnable signal.
+**Status**: COMPLETE (Integrated Sentis, ONNX-based Pursuit Scorer, Adaptive Mira Dialogue)
 
 **Possible experiments**:
 - Player behaviour prediction (fragment collection order)
@@ -198,4 +198,4 @@
 
 ---
 
-*Current phase: P7 — ML Experiments (Conditional). See TASKS.md for active work.*
+*Current phase: P8 — Evaluation (Conditional). See TASKS.md for active work.*
