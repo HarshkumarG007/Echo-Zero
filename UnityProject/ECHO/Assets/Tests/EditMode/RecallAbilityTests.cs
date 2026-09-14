@@ -71,7 +71,7 @@ namespace EchoZero.Tests.EditMode
             // Let's just verify _configMock.RecallRange was only accessed once (on the successful raycast)
             // Actually, the cooldown check happens before accessing RecallRange.
             
-            _configMock.Received(1).RecallRange;
+            var _ = _configMock.Received(1).RecallRange;
         }
     }
 }

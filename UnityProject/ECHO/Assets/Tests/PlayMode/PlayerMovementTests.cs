@@ -13,6 +13,7 @@ namespace EchoZero.Tests.PlayMode
         {
             public float PlayerMoveSpeed => 5f;
             public float RecallRange => 4f;
+            public float RecallCooldown => 1f;
             public float DriftStabiliseDuration => 3f;
             public float DriftDetectionRadius => 8f;
             public float DriftPursuitSpeed => 3f;
