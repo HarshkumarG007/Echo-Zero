@@ -34,7 +34,7 @@ namespace EchoZero.Narrative
 
             if (ServiceLocator.TryGet<NarrativeState>(out var narrativeState))
             {
-                narrativeState.SetFlag(NarrativeFlags.RevealTriggered, true);
+                narrativeState.SetFlag(NarrativeFlags.RevealTriggered);
                 Debug.Log("[RevealSequence] Reveal flag set in NarrativeState.");
             }
             else
