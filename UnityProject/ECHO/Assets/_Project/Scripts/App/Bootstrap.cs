@@ -30,8 +30,12 @@ namespace EchoZero.App
 
         private void Awake()
         {
+            // Prevent uncapped framerates from overheating the GPU
+            Application.targetFrameRate = 60;
+            QualitySettings.vSyncCount = 1;
+
             RegisterServices();
-            Debug.Log("[Bootstrap][Info] All services registered.");
+            Debug.Log("[Bootstrap][Info] All services registered. Framerate capped to 60.");
         }
 
         private void Start()

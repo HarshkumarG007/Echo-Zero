@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:editor="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd"
+>
+    <ui:Style src="GameplayUI.uss" />
+
+    <ui:VisualElement name="hud-container" style="flex-grow: 1; align-items: center; justify-content: center;">
+        <ui:VisualElement name="reticle" style="width: 10px; height: 10px; background-color: rgba(255, 255, 255, 0.8); border-radius: 5px;" />
+    </ui:VisualElement>
+
+    <ui:VisualElement name="dialogue-container" style="position: absolute; bottom: 50px; left: 10%; right: 10%; background-color: rgba(0, 0, 0, 0.7); padding: 20px; border-radius: 10px;" class="dialogue-closed">
+        <ui:Label name="dialogue-text" text="Sample dialogue text..." style="color: white; font-size: 24px; -unity-text-align: middle-center;" />
+    </ui:VisualElement>
+</ui:UXML>

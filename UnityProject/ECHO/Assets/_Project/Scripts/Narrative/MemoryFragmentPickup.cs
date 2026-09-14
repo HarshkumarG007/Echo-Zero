@@ -39,6 +39,14 @@ namespace EchoZero.Narrative
                 worldState.UnregisterFragment(ObjectId);
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                OnRecall(); // Collect it automatically on touch!
+            }
+        }
+
         // ------------------------------------------------------------------ //
         // IRecallable
         // ------------------------------------------------------------------ //
@@ -79,7 +87,10 @@ namespace EchoZero.Narrative
                 Debug.LogWarning("[MemoryFragmentPickup] ITelemetryService not registered.");
 
             // Hide visual
-            if (_visual != null) _visual.SetActive(false);
+            if (_visual != null) 
+                _visual.SetActive(false);
+            else 
+                gameObject.SetActive(false);
 
             Debug.Log($"[MemoryFragmentPickup][Info] Collected: {_fragment.fragmentId}");
         }

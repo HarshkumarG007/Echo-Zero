@@ -18,8 +18,8 @@ namespace EchoZero.Core.ML
             UnloadModel();
             
             _runtimeModel = ModelLoader.Load(modelAsset);
-            _engine = new Worker(_runtimeModel, BackendType.GPUCompute);
-            Debug.Log("[SentisModelRunner] Model loaded successfully on GPUCompute backend.");
+            _engine = new Worker(_runtimeModel, BackendType.CPU);
+            Debug.Log("[SentisModelRunner] Model loaded successfully on CPU backend.");
         }
 
         public Tensor<float> Execute(Tensor<float> inputTensor)

@@ -12,6 +12,8 @@ namespace EchoZero.AI.Drift
         [SerializeField] private Transform _playerTransform;
         
         private DriftUtilityBrain _brain;
+        private CharacterController _characterController;
+        private float _speed = 3.5f;
         private float _lastRecallTime = -1f;
         private Vector3 _lastPlayerPos;
 
@@ -26,6 +28,21 @@ namespace EchoZero.AI.Drift
 
         private void Start()
         {
+            _characterController = GetComponent<CharacterController>();
+            if (_characterController == null)
+            {
+                _characterController = gameObject.AddComponent<CharacterController>();
+            }
+
+            if (_playerTransform == null)
+            {
+                var player = GameObject.FindWithTag("Player");
+                if (player != null)
+                {
+                    _playerTransform = player.transform;
+                }
+            }
+
             if (_playerTransform != null) _lastPlayerPos = _playerTransform.position;
         }
 
@@ -46,6 +63,14 @@ namespace EchoZero.AI.Drift
             _lastPlayerPos = _playerTransform.position;
 
             _brain.Update(Time.deltaTime, distanceToPlayer, isBeingRecalled, playerVelocity);
+
+            if (_brain.CurrentState == DriftState.Pursuing && _characterController != null)
+            {
+                Vector3 direction = (_playerTransform.position - transform.position).normalized;
+                direction.y = 0; // keep it grounded
+                _characterController.SimpleMove(direction * _speed);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 5f);
+            }
         }
 
         public void OnRecall()
