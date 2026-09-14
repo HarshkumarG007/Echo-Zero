@@ -31,6 +31,8 @@ namespace EchoZero.Core.Telemetry
     {
         private TelemetrySession _session;
         private string _filePath;
+        private int _totalRecallsUsed = 0;
+        private int _totalFragmentsCollected = 0;
 
         private void Awake()
         {
@@ -61,19 +63,32 @@ namespace EchoZero.Core.Telemetry
             => LogEvent("SessionStart", string.Empty);
 
         public void TrackFragmentCollected(string fragmentId)
-            => LogEvent("FragmentCollected", $"Fragment: {fragmentId}");
+        {
+            _totalFragmentsCollected++;
+            LogEvent("FragmentCollected", $"Fragment: {fragmentId}");
+        }
 
         public void TrackChoiceMade(string chosenFragmentId)
             => LogEvent("ChoiceMade", $"Fragment: {chosenFragmentId}");
 
         public void TrackRecallUsed(string targetType, bool success)
-            => LogEvent("RecallUsed", $"Target: {targetType}, Success: {success}");
+        {
+            _totalRecallsUsed++;
+            LogEvent("RecallUsed", $"Target: {targetType}, Success: {success}");
+        }
 
         public void TrackDriftStabilized(int attemptCount)
             => LogEvent("DriftStabilized", $"Attempts: {attemptCount}");
 
         public void TrackSceneLoaded(string sceneName, float durationMs)
             => LogEvent("SceneLoaded", $"Scene: {sceneName}, Duration: {durationMs:F1}ms");
+
+        public float GetAggressionScore()
+        {
+            if (_totalFragmentsCollected == 0) return 0.5f;
+            float ratio = (float)_totalRecallsUsed / _totalFragmentsCollected;
+            return Mathf.Clamp01(ratio / 2f);
+        }
 
         // ── EventBus listeners ─────────────────────────────────────────────
 
