@@ -8,20 +8,32 @@ namespace EchoZero.Tools.Editor
     public static class BuildPipeline
     {
         [MenuItem("ECHO//ZERO/Build Windows 64-bit (IL2CPP)")]
-        public static void BuildWindows64()
+        public static void BuildWindows64_IL2CPP()
         {
-            Debug.Log("[BuildPipeline] Starting Windows 64-bit IL2CPP build...");
+            BuildWindows64(ScriptingImplementation.IL2CPP);
+        }
+
+        [MenuItem("ECHO//ZERO/Build Windows 64-bit (Mono)")]
+        public static void BuildWindows64_Mono()
+        {
+            BuildWindows64(ScriptingImplementation.Mono2x);
+        }
+
+        private static void BuildWindows64(ScriptingImplementation scriptingBackend)
+        {
+            Debug.Log($"[BuildPipeline] Starting Windows 64-bit {scriptingBackend} build...");
 
             // Ensure build directory exists
-            string buildPath = Path.Combine(Application.dataPath, "../Builds/Windows/ECHO_ZERO.exe");
+            string backendFolder = scriptingBackend == ScriptingImplementation.IL2CPP ? "Windows_IL2CPP" : "Windows_Mono";
+            string buildPath = Path.Combine(Application.dataPath, $"../Builds/{backendFolder}/ECHO_ZERO.exe");
             string buildDir = Path.GetDirectoryName(buildPath);
             if (!Directory.Exists(buildDir))
             {
                 Directory.CreateDirectory(buildDir);
             }
 
-            // Configure Player Settings for IL2CPP Windows 64
-            PlayerSettings.SetScriptingBackend(BuildTargetGroup.Standalone, ScriptingImplementation.IL2CPP);
+            // Configure Player Settings
+            PlayerSettings.SetScriptingBackend(BuildTargetGroup.Standalone, scriptingBackend);
             PlayerSettings.SetArchitecture(BuildTargetGroup.Standalone, 1); // 1 = x64
 
             // Define scenes (order matters)
