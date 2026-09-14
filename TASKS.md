@@ -113,3 +113,45 @@ First five tasks only, in dependency order, small enough for one agent session e
 **Acceptance criteria:** Given a specific set of active narrative flags, the selector deterministically returns the correct authored dialogue string.
 
 **Test:** EditMode tests — setup various `NarrativeState` combinations and assert the correct dialogue string is returned.
+
+---
+
+### [x] TASK-009: Basic UI (HUD & Dialogue Display)
+
+**Objective:** Implement the fundamental HUD using Unity's UI Toolkit (per ADR). This includes a simple reticle for RECALL targeting and a dialogue box that displays Mira's deterministic dialogue text.
+
+**Files:** `UI/GameplayUI.cs`, `UI/Tests/GameplayUITests.cs`
+
+**Dependencies:** TASK-008.
+
+**Acceptance criteria:** The HUD renders a central reticle. The Dialogue UI can be toggled on and off via script and correctly displays text strings queried from `MiraDialogueSelector`.
+
+**Test:** EditMode tests confirming the UI logic works without scene overhead.
+
+---
+
+### [x] TASK-010: The Drift Encounter (FSM)
+
+**Objective:** Build the Drift AI controller using a finite state machine (Patrol -> Alerted -> Pursuing -> Destabilizing -> Stabilized). The Drift must implement `IRecallable` so that the player can stabilize it via RECALL.
+
+**Files:** `AI/Drift/DriftController.cs`, `AI/Drift/DriftStateMachine.cs`, `AI/Drift/Tests/DriftStateMachineTests.cs`.
+
+**Dependencies:** TASK-004.
+
+**Acceptance criteria:** The Drift transitions states accurately based on player distance. Sustaining RECALL on it triggers the `Stabilized` state, firing a `DriftStabilizedEvent` and rendering it harmless.
+
+**Test:** EditMode unit tests confirming state transitions and `IRecallable` interactions without needing physics/scene overhead.
+
+---
+
+### [x] TASK-011: The Choice Interaction
+
+**Objective:** Build the physical world object that represents a contradictory memory choice. When targeted by RECALL, it must call `ValidateFragment` on the `FragmentRegistry` and permanently lock the narrative outcome.
+
+**Files:** `Narrative/ChoicePedestal.cs`, `Narrative/Tests/ChoicePedestalTests.cs`.
+
+**Dependencies:** TASK-005.
+
+**Acceptance criteria:** RECALLing the pedestal successfully validates the assigned fragment in `FragmentRegistry`, publishes `ChoiceMadeEvent`, and disables the alternate pedestal.
+
+**Test:** EditMode tests verifying `OnRecall()` interacts correctly with the `FragmentRegistry` in a choice state.
