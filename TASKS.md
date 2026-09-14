@@ -155,3 +155,45 @@ First five tasks only, in dependency order, small enough for one agent session e
 **Acceptance criteria:** RECALLing the pedestal successfully validates the assigned fragment in `FragmentRegistry`, publishes `ChoiceMadeEvent`, and disables the alternate pedestal.
 
 **Test:** EditMode tests verifying `OnRecall()` interacts correctly with the `FragmentRegistry` in a choice state.
+
+---
+
+### TASK-012: Aerie Scene Streaming
+
+**Objective:** Implement additive scene loading to divide the Aerie into `Upper` and `Lower` environments (per ADR). Streaming is narratively justified (ECHO only remembers what's nearby) and technically required.
+
+**Files:** `Core/Scenes/SceneStreamer.cs`, `Core/Scenes/Tests/SceneStreamerTests.cs`.
+
+**Dependencies:** None.
+
+**Acceptance criteria:** A `SceneStreamer` MonoBehaviour detects the player entering a trigger volume and asynchronously loads a specified scene additively, unloading the previous one when leaving a buffer zone.
+
+**Test:** EditMode tests mocking `SceneManager` async operations or state changes.
+
+---
+
+### TASK-013: Pause Menu & State Management
+
+**Objective:** Implement the pause state (`Time.timeScale = 0`) and the Pause Menu UI. This menu must allow the player to trigger `SaveService.SaveGame()` and resume.
+
+**Files:** `UI/PauseMenuUI.cs`, `Core/GameStateManager.cs`, `UI/Tests/PauseMenuTests.cs`.
+
+**Dependencies:** TASK-002 (SaveSystem), TASK-009 (UI).
+
+**Acceptance criteria:** Hitting the Pause input stops time and displays the pause UI. The UI offers "Resume" and "Save Game" options.
+
+**Test:** EditMode tests verifying state toggles and correct `SaveService` invocation.
+
+---
+
+### TASK-014: The Reveal Sequence Manager
+
+**Objective:** Build the manager that handles the final narrative reveal. This sequence triggers when entering the core chamber, sets the `RevealTriggered` flag in `NarrativeState`, removes/disables Mira, and rolls the closing state.
+
+**Files:** `Narrative/RevealSequence.cs`, `Narrative/Tests/RevealSequenceTests.cs`.
+
+**Dependencies:** TASK-006 (NarrativeState).
+
+**Acceptance criteria:** When triggered, the script sets `NarrativeFlags.RevealTriggered`, hides the player HUD/reticle, and disables `MiraDialogueSelector` outputs.
+
+**Test:** EditMode tests ensuring all narrative flags and system state changes execute sequentially when `TriggerReveal()` is called.
