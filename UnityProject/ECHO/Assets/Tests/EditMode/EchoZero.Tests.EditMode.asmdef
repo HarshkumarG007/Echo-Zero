@@ -12,7 +12,8 @@
     "EchoZero.AI",
     "Unity.InputSystem",
     "UnityEngine.TestRunner",
-    "UnityEditor.TestRunner"
+    "UnityEditor.TestRunner",
+    "Unity.Sentis"
   ],
   "includePlatforms": ["Editor"],
   "excludePlatforms": [],

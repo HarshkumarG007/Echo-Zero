@@ -1,4 +1,4 @@
-﻿# ROADMAP.md — ECHO//ZERO
+# ROADMAP.md — ECHO//ZERO
 
 > This roadmap is milestone-based, not calendar-based.
 > A phase does not begin until the previous phase passes its quality gate.
@@ -198,4 +198,4 @@
 
 ---
 
-*Current phase: P3 — Build. See TASKS.md for active work.*
+*Current phase: P7 — ML Experiments (Conditional). See TASKS.md for active work.*

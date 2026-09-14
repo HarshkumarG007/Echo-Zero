@@ -1,7 +1,9 @@
-﻿{
+{
   "name": "EchoZero.Core",
   "rootNamespace": "EchoZero.Core",
-  "references": [],
+  "references": [
+    "Unity.Sentis"
+  ],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": false,

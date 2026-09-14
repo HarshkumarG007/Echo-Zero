@@ -295,3 +295,45 @@ First five tasks only, in dependency order, small enough for one agent session e
 **Acceptance criteria:** Subscribes to events (e.g., `DriftStabilizedEvent`, `ChoiceMadeEvent`) and logs a JSON payload to `Application.persistentDataPath/telemetry_session.json`.
 
 **Test:** EditMode tests verifying the file is created and populated with valid JSON upon receiving an event.
+
+---
+
+### [x] TASK-022: Unity Sentis Integration
+
+**Objective:** Install and configure Unity Sentis for running ONNX models locally within Unity.
+
+**Files:** `Packages/manifest.json`, `Core/ML/SentisModelRunner.cs`, `Core/ML/Tests/SentisModelRunnerTests.cs`.
+
+**Dependencies:** None.
+
+**Acceptance criteria:** Unity Sentis package is installed. `SentisModelRunner` service is registered in `Bootstrap` and can load and execute a dummy ONNX model without throwing exceptions.
+
+**Test:** EditMode tests for `SentisModelRunner` to ensure models load and execute correctly.
+
+---
+
+### [ ] TASK-023: ML-Driven Drift Navigation Policy
+
+**Objective:** Augment the Drift's `Pursuing` utility scorer with a small trained model that predicts the player's next position.
+
+**Files:** `AI/Drift/MLPursuitScorer.cs`, `AI/Drift/DriftUtilityBrain.cs`.
+
+**Dependencies:** TASK-022.
+
+**Acceptance criteria:** Introduce a lightweight ONNX model that takes the player's recent trajectory and outputs a predicted interception point. Create a new `MLPursuitScorer` for the `DriftUtilityBrain` that utilizes this prediction.
+
+**Test:** EditMode tests verifying the ML scorer integrates into the brain and falls back gracefully if inference fails.
+
+---
+
+### [ ] TASK-024: Adaptive Mira Dialogue Weights
+
+**Objective:** Use a model to adjust the weights of Mira's dialogue lines based on player playstyle (e.g., aggressive fragment collection vs. slow exploration).
+
+**Files:** `Narrative/Mira/MiraDialogueSelector.cs`.
+
+**Dependencies:** TASK-022.
+
+**Acceptance criteria:** Hook an ML model (or weighted logic) into `MiraDialogueSelector` to bias certain dialogue variants based on telemetry data.
+
+**Test:** EditMode tests verifying Mira returns different dialogue strings based on different playstyle inputs.

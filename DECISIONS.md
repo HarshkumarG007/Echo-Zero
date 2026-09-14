@@ -49,3 +49,19 @@ New ADRs get appended here, numbered sequentially, only when a decision actually
 **Consequences:** If the game later adds real learned AI or multiplayer, expect a deliberate refactor (a new ADR) to introduce the layers that are genuinely needed then, instead of guessing their shape now.
 
 **Rejected:** The full layer stack (right for a large team building a persistent platform, not a 20–30 minute solo slice); a flat single-folder structure (too little separation even at this size — `Gameplay` and `Narrative` would tangle almost immediately, since Mira's dialogue has to react to RECALL state).
+
+---
+
+## ADR-0004: Unity Sentis for Local ML Inference
+
+**Status:** Accepted
+
+**Context:** For Phase 7, we need to run ML inference (predicting player trajectories and classifying playstyle) locally without incurring cloud inference costs or network latency, staying within the strict 8ms CPU / 16.6ms frame time budget of the target hardware (RTX 4060).
+
+**Decision:** Use Unity Sentis (`com.unity.sentis`) to run lightweight ONNX models.
+
+**Why:** Unity Sentis is native to the Unity ecosystem, heavily optimized for both CPU (burst compiled) and GPU (compute shaders) inference, and avoids the overhead of managing Python environments or external processes. It supports standard ONNX format, meaning models can be trained anywhere (PyTorch/TensorFlow) and executed efficiently in-engine.
+
+**Consequences:** We must keep our models small (under a few MBs) to avoid memory footprint issues, and carefully schedule inference so it doesn't block the main thread.
+
+**Rejected:** Python/FastAPI local server (too heavy, complicates distribution); Cloud API (introduces latency, costs money, requires network connection).

@@ -4,6 +4,7 @@ using EchoZero.Core.Settings;
 using EchoZero.Data.Save;
 using EchoZero.Data.Telemetry;
 using EchoZero.Narrative;
+using EchoZero.Core.ML;
 
 namespace EchoZero.App
 {
@@ -76,6 +77,10 @@ namespace EchoZero.App
             // Settings (loads persisted prefs immediately)
             var settingsManager = new SettingsManager();
             ServiceLocator.Register<SettingsManager>(settingsManager);
+
+            // ML
+            var sentisRunner = new SentisModelRunner();
+            ServiceLocator.Register<ISentisModelRunner>(sentisRunner);
 
             // Start telemetry session
             telemetry.TrackSessionStart();
