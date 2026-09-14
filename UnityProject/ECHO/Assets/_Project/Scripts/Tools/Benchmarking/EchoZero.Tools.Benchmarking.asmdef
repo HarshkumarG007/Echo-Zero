@@ -1,0 +1,17 @@
+{
+  "name": "EchoZero.Tools.Benchmarking",
+  "rootNamespace": "EchoZero.Tools.Benchmarking",
+  "references": [
+    "EchoZero.Core",
+    "Unity.InferenceEngine"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

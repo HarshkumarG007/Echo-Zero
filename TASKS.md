@@ -354,7 +354,7 @@ First five tasks only, in dependency order, small enough for one agent session e
 
 ---
 
-### [ ] TASK-026: Benchmark Suite
+### [x] TASK-026: Benchmark Suite
 
 **Objective:** Develop a headless-compatible benchmarking script to measure the performance impact of the ML models against the Phase 6 baseline.
 
