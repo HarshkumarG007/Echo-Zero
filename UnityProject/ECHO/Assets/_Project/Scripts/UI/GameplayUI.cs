@@ -35,7 +35,8 @@ namespace EchoZero.UI
 
             if (_dialogueContainer != null)
             {
-                _dialogueContainer.style.display = DisplayStyle.None; // Hidden by default
+                _dialogueContainer.AddToClassList("dialogue-closed");
+                _dialogueContainer.RemoveFromClassList("dialogue-open");
             }
 
             IsInitialized = true;
@@ -53,7 +54,8 @@ namespace EchoZero.UI
             }
 
             _dialogueText.text = text;
-            _dialogueContainer.style.display = DisplayStyle.Flex;
+            _dialogueContainer.RemoveFromClassList("dialogue-closed");
+            _dialogueContainer.AddToClassList("dialogue-open");
         }
 
         /// <summary>
@@ -63,7 +65,8 @@ namespace EchoZero.UI
         {
             if (_dialogueContainer != null)
             {
-                _dialogueContainer.style.display = DisplayStyle.None;
+                _dialogueContainer.RemoveFromClassList("dialogue-open");
+                _dialogueContainer.AddToClassList("dialogue-closed");
             }
         }
     }

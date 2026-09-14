@@ -43,7 +43,8 @@ namespace EchoZero.UI
 
             if (_pauseContainer != null)
             {
-                _pauseContainer.style.display = DisplayStyle.None;
+                _pauseContainer.AddToClassList("menu-closed");
+                _pauseContainer.RemoveFromClassList("menu-open");
             }
 
             if (_resumeButton != null) _resumeButton.clicked += OnResumeClicked;
@@ -53,7 +54,17 @@ namespace EchoZero.UI
         private void OnGamePaused(GamePausedEvent evt)
         {
             if (_pauseContainer == null) return;
-            _pauseContainer.style.display = evt.IsPaused ? DisplayStyle.Flex : DisplayStyle.None;
+            
+            if (evt.IsPaused)
+            {
+                _pauseContainer.RemoveFromClassList("menu-closed");
+                _pauseContainer.AddToClassList("menu-open");
+            }
+            else
+            {
+                _pauseContainer.RemoveFromClassList("menu-open");
+                _pauseContainer.AddToClassList("menu-closed");
+            }
         }
 
         private void OnResumeClicked()
