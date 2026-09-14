@@ -197,3 +197,59 @@ First five tasks only, in dependency order, small enough for one agent session e
 **Acceptance criteria:** When triggered, the script sets `NarrativeFlags.RevealTriggered`, hides the player HUD/reticle, and disables `MiraDialogueSelector` outputs.
 
 **Test:** EditMode tests ensuring all narrative flags and system state changes execute sequentially when `TriggerReveal()` is called.
+
+---
+
+### [x] TASK-015: Audio Management System
+
+**Objective:** Build a centralized `AudioManager` using the `ServiceLocator` pattern that handles routing audio to the correct `AudioMixerGroup` (Music, SFX, Voiceover).
+
+**Files:** `Core/Audio/AudioManager.cs`, `Core/Audio/Tests/AudioManagerTests.cs`.
+
+**Dependencies:** None.
+
+**Acceptance criteria:** `AudioManager` registers with `ServiceLocator`. It exposes methods to play SFX, Music, and Voiceover, correctly routing them through Unity's `AudioSource` components with basic fading logic.
+
+**Test:** EditMode tests mocking `AudioSource` creation and verifying that play requests correctly assign clips and volume logic.
+
+---
+
+### [x] TASK-016: Settings System & UI
+
+**Objective:** Implement persistent settings (Resolution, Master/Music/SFX Volume, and Input Rebinding).
+
+**Files:** `Core/Settings/SettingsManager.cs`, `UI/SettingsUI.cs`, `Core/Settings/Tests/SettingsManagerTests.cs`.
+
+**Dependencies:** TASK-013 (PauseMenuUI - to open Settings).
+
+**Acceptance criteria:** Changing volume updates `AudioMixer` parameters. Settings are saved/loaded. Keybinds can be overridden in the Unity Input System.
+
+**Test:** EditMode tests verifying setting values correctly update and fire change events.
+
+---
+
+### [x] TASK-017: UI Toolkit Polish (USS/Transitions)
+
+**Objective:** Upgrade our basic `GameplayUI` and `PauseMenuUI` with smooth transitions and premium hover states.
+
+**Files:** `UI/GameplayUI.cs`, `UI/PauseMenuUI.cs`.
+
+**Dependencies:** TASK-009, TASK-013.
+
+**Acceptance criteria:** UI controllers are updated to toggle USS classes (e.g., `.menu-open`, `.menu-closed`) instead of hardcoding `DisplayStyle.None`.
+
+**Test:** EditMode tests verifying the correct CSS classes are added/removed upon state changes.
+
+---
+
+### [x] TASK-018: VFX & Shader Controllers
+
+**Objective:** Provide the C# scripts necessary to drive the "Memory Formation" and "RECALL" shader effects dynamically over time.
+
+**Files:** `Gameplay/VFX/MaterialPropertyFader.cs`.
+
+**Dependencies:** None.
+
+**Acceptance criteria:** A MonoBehaviour that takes a renderer, material property name, target float value, and duration, and tweens it via Coroutine.
+
+**Test:** PlayMode or EditMode test verifying the material property reaches the target value.

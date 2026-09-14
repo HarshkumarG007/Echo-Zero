@@ -9,10 +9,10 @@
 
 | Field | Value |
 |-------|-------|
-| Phase | P4 — Vertical Slice |
+| Phase | P5 — Polish |
 | Started | 2026-09-14 |
-| Target completion | Phase 4 Completed |
-| Blocking task | None (Phase 4 Vertical Slice Complete) |
+| Target completion | Phase 5 Completed |
+| Blocking task | None (Phase 5 Polish Complete) |
 | Last updated | 2026-09-14 |
 
 ---
@@ -26,7 +26,7 @@
 | G2 | Foundation | ✅ PASS | 14 repo files, antigravity.project.json, TASKS.md |
 | G3 | Core Gameplay | ✅ PASS | Tasks 1-8 completed, tested, and committed |
 | G4 | Vertical Slice | ✅ PASS | Tasks 9-14 completed, tested, and committed |
-| G5 | Performance | ⬜ NOT STARTED | — |
+| G5 | Performance & Polish | ✅ PASS | Tasks 15-18 completed, tested, and committed |
 | G6 | AI | ⬜ NOT STARTED | — |
 | G7 | ML Evaluation | ➖ NOT APPLICABLE | Conditional on Phase 6 baseline |
 | G8 | Security | ⬜ NOT STARTED | — |
@@ -55,6 +55,10 @@
 | TASK-012 | Aerie Scene Streaming | ✅ Complete | UNITY_ENGINEER |
 | TASK-013 | Pause Menu & State Management | ✅ Complete | UI_ENGINEER |
 | TASK-014 | The Reveal Sequence Manager | ✅ Complete | NARRATIVE_DIRECTOR |
+| TASK-015 | Audio Management System | ✅ Complete | UNITY_ENGINEER |
+| TASK-016 | Settings System & UI | ✅ Complete | UI_ENGINEER |
+| TASK-017 | UI Toolkit Polish (USS/Transitions) | ✅ Complete | UI_ENGINEER |
+| TASK-018 | VFX & Shader Controllers | ✅ Complete | PERFORMANCE_ENGINEER |
 
 ---
 
