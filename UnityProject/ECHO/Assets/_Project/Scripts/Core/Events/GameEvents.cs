@@ -27,6 +27,17 @@ namespace EchoZero.Core.Events.Gameplay
         /// <summary>World-space push direction applied to the player.</summary>
         public UnityEngine.Vector3 PushDirection;
     }
+
+    /// <summary>Published when RECALL targets an object with a registered fragment.</summary>
+    public struct FragmentFoundEvent
+    {
+        public string FragmentId;
+    }
+
+    /// <summary>Published when RECALL targets an object without a fragment.</summary>
+    public struct NothingFoundEvent
+    {
+    }
 }
 
 namespace EchoZero.Core.Events.Narrative

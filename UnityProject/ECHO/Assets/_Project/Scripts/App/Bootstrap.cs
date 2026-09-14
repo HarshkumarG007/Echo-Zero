@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using EchoZero.Core;
 using EchoZero.Data.Save;
 using EchoZero.Data.Telemetry;
@@ -60,6 +60,9 @@ namespace EchoZero.App
             // World
             var sceneLoader = new SceneLoader(this);   // pass self as coroutine runner
             ServiceLocator.Register<ISceneLoader>(sceneLoader);
+            
+            var worldState = new EchoZero.Core.WorldState.WorldState();
+            ServiceLocator.Register<EchoZero.Core.WorldState.WorldState>(worldState);
 
             // Narrative
             var narrativeState = new NarrativeState();

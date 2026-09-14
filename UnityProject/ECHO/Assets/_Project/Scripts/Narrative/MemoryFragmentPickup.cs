@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using EchoZero.Core;
 using EchoZero.Core.Events;
 using EchoZero.Core.Events.Narrative;
@@ -24,9 +24,25 @@ namespace EchoZero.Narrative
 
         private bool _collected;
 
+        private void Start()
+        {
+            if (_fragment != null)
+            {
+                ServiceLocator.Get<EchoZero.Core.WorldState.WorldState>()?.RegisterFragment(ObjectId, _fragment.fragmentId);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            ServiceLocator.Get<EchoZero.Core.WorldState.WorldState>()?.UnregisterFragment(ObjectId);
+        }
+
         // ------------------------------------------------------------------ //
         // IRecallable
         // ------------------------------------------------------------------ //
+
+        /// <inheritdoc/>
+        public string ObjectId => gameObject.GetInstanceID().ToString();
 
         /// <inheritdoc/>
         public bool CanRecall => !_collected && _fragment != null;

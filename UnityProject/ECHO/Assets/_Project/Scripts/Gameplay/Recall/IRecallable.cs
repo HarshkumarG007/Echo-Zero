@@ -1,4 +1,4 @@
-﻿namespace EchoZero.Gameplay.Recall
+namespace EchoZero.Gameplay.Recall
 {
     /// <summary>
     /// Implemented by any world object that can be targeted by the RECALL ability.
@@ -18,6 +18,11 @@
         /// False if already collected, already stabilised, or prerequisites not met.
         /// </summary>
         bool CanRecall { get; }
+
+        /// <summary>
+        /// Unique identifier for this object, used to query WorldState.
+        /// </summary>
+        string ObjectId { get; }
 
         /// <summary>
         /// Called by RecallSystem when the player successfully applies RECALL.

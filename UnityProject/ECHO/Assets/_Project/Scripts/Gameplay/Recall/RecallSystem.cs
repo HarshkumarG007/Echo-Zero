@@ -40,6 +40,7 @@ namespace EchoZero.Gameplay.Recall
             if (target == null)
             {
                 Debug.LogWarning("[RecallSystem][Warning] TryRecall called with null target.");
+                EventBus<NothingFoundEvent>.Publish(new NothingFoundEvent());
                 Publish(target, success: false);
                 return false;
             }
@@ -49,6 +50,18 @@ namespace EchoZero.Gameplay.Recall
                 Debug.Log($"[RecallSystem][Debug] Target CanRecall=false: {target}");
                 Publish(target, success: false);
                 return false;
+            }
+            
+            // Check WorldState for a fragment
+            var worldState = ServiceLocator.Get<EchoZero.Core.WorldState.WorldState>();
+            if (worldState != null && worldState.TryGetFragment(target.ObjectId, out string fragmentId))
+            {
+                EventBus<FragmentFoundEvent>.Publish(new FragmentFoundEvent { FragmentId = fragmentId });
+                Debug.Log($"[RecallSystem][Debug] FragmentFoundEvent published: {fragmentId}");
+            }
+            else
+            {
+                EventBus<NothingFoundEvent>.Publish(new NothingFoundEvent());
             }
 
             target.OnRecall();
