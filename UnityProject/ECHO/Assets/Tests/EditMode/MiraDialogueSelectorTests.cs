@@ -24,7 +24,7 @@ namespace EchoZero.Tests.EditMode
             ServiceLocator.Register<ITelemetryService>(_mockTelemetry);
 
             _narrativeState = new NarrativeState();
-            _fragmentRegistry = new FragmentRegistry();
+            _fragmentRegistry = new FragmentRegistry(System.Array.Empty<MemoryFragmentSO>());
             _config = ScriptableObject.CreateInstance<MiraDialogueConfig>();
 
             // Setup identifiable lines in config
