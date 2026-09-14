@@ -435,3 +435,45 @@ First five tasks only, in dependency order, small enough for one agent session e
 **Acceptance criteria:** Corrupting the on-disk save file and attempting to load results in a clean fallback state rather than a thrown exception.
 
 **Test:** EditMode test generating a save, modifying the JSON content on disk without updating the checksum, and asserting `SaveService.Load()` detects the mismatch.
+
+---
+
+### [x] TASK-032: IL2CPP Build Pipeline
+
+**Objective:** Configure a repeatable command-line build script for IL2CPP Windows 64-bit.
+
+**Files:** `Tools/Editor/BuildPipeline.cs`.
+
+**Dependencies:** None.
+
+**Acceptance criteria:** A static method `BuildWindows64` exists that can be invoked headlessly to produce an optimized standalone build.
+
+**Test:** Execute the build method and verify a `.exe` is generated in `Builds/Windows/`.
+
+---
+
+### [x] TASK-033: Release Notes
+
+**Objective:** Compile the final patch notes reflecting all changes since the Phase 6 baseline.
+
+**Files:** `RELEASE_NOTES.md`.
+
+**Dependencies:** None.
+
+**Acceptance criteria:** A markdown file summarizing the ML integrations, Red Team hardening, and known limits.
+
+**Test:** N/A (Documentation).
+
+---
+
+### [x] TASK-034: Distribution Preparation
+
+**Objective:** Prepare the copy for the storefront/portfolio page.
+
+**Files:** `docs/release/itch-io-page.md`.
+
+**Dependencies:** None.
+
+**Acceptance criteria:** Draft marketing copy, technical highlights, and installation instructions for an itch.io release.
+
+**Test:** N/A (Documentation).

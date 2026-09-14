@@ -177,9 +177,11 @@
 
 ---
 
-## Phase 10 — Release
+## Phase 10 — Release ✅
 
 **Goal**: A build that can be distributed and run on target hardware without a Unity editor.
+
+**Status**: COMPLETE (IL2CPP build script, Release Notes, and distribution copy generated)
 
 **Deliverables**:
 - IL2CPP build pipeline configured
@@ -202,4 +204,4 @@
 
 ---
 
-*Current phase: P10 — Polish. See TASKS.md for active work.*
+*Current phase: P11 — Portfolio. See TASKS.md for active work.*
