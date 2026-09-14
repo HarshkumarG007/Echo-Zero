@@ -3,7 +3,7 @@ using EchoZero.Core.Events;
 
 namespace EchoZero.Core.Settings
 {
-    public struct SettingsChangedEvent : IEvent { }
+    public struct SettingsChangedEvent { }
 
     [System.Serializable]
     public class SettingsConfig
