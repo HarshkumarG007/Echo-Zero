@@ -60,7 +60,7 @@ First five tasks only, in dependency order, small enough for one agent session e
 
 ---
 
-### TASK-005: Fragment data model and contradiction check
+### [x] TASK-005: Fragment data model and contradiction check
 
 **Objective:** ScriptableObject-based fragment definitions, plus the logic that detects when two found fragments contradict each other — the piece the puzzle, the meaningful choice, and Mira's dialogue all depend on.
 
