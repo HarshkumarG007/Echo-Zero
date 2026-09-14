@@ -7,7 +7,7 @@ namespace EchoZero.Core.ML
     public class SentisModelRunner : ISentisModelRunner, IDisposable
     {
         private Model _runtimeModel;
-        private IWorker _engine;
+        private Worker _engine;
         
         public bool IsModelLoaded => _engine != null;
 
@@ -18,7 +18,7 @@ namespace EchoZero.Core.ML
             UnloadModel();
             
             _runtimeModel = ModelLoader.Load(modelAsset);
-            _engine = WorkerFactory.CreateWorker(BackendType.GPUCompute, _runtimeModel);
+            _engine = new Worker(_runtimeModel, BackendType.GPUCompute);
             Debug.Log("[SentisModelRunner] Model loaded successfully on GPUCompute backend.");
         }
 
@@ -27,7 +27,7 @@ namespace EchoZero.Core.ML
             if (!IsModelLoaded) throw new InvalidOperationException("No model loaded.");
             if (inputTensor == null) throw new ArgumentNullException(nameof(inputTensor));
             
-            _engine.Execute(inputTensor);
+            _engine.Schedule(inputTensor);
             
             var output = _engine.PeekOutput() as Tensor<float>;
             return output;
