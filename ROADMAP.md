@@ -144,9 +144,11 @@
 
 ---
 
-## Phase 8 — Evaluation (Conditional)
+## Phase 8 — Evaluation (Conditional) ✅
 
 **Goal**: Evaluation framework that produces defensible, reproducible results.
+
+**Status**: COMPLETE (Experiment Registry, Reproducibility Checklist, and Benchmark Suite finalized)
 
 **Deliverables**:
 - Experiment registry
@@ -198,4 +200,4 @@
 
 ---
 
-*Current phase: P8 — Evaluation (Conditional). See TASKS.md for active work.*
+*Current phase: P9 — Red Team. See TASKS.md for active work.*
