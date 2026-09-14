@@ -13,6 +13,7 @@ namespace EchoZero.AI.Drift
         
         private DriftUtilityBrain _brain;
         private float _lastRecallTime = -1f;
+        private Vector3 _lastPlayerPos;
 
         public bool CanRecall => _brain != null && _brain.CurrentState != DriftState.Stabilized;
         public string ObjectId => gameObject.GetHashCode().ToString();
@@ -21,6 +22,11 @@ namespace EchoZero.AI.Drift
         private void Awake()
         {
             _brain = new DriftUtilityBrain();
+        }
+
+        private void Start()
+        {
+            if (_playerTransform != null) _lastPlayerPos = _playerTransform.position;
         }
 
         private void Update()
@@ -32,7 +38,14 @@ namespace EchoZero.AI.Drift
             // Assume if OnRecall was called in the last 0.1 seconds, it's being actively recalled
             bool isBeingRecalled = (Time.time - _lastRecallTime) < 0.1f;
 
-            _brain.Update(Time.deltaTime, distanceToPlayer, isBeingRecalled);
+            Vector3 playerVelocity = Vector3.zero;
+            if (Time.deltaTime > 0f)
+            {
+                playerVelocity = (_playerTransform.position - _lastPlayerPos) / Time.deltaTime;
+            }
+            _lastPlayerPos = _playerTransform.position;
+
+            _brain.Update(Time.deltaTime, distanceToPlayer, isBeingRecalled, playerVelocity);
         }
 
         public void OnRecall()
@@ -46,9 +59,9 @@ namespace EchoZero.AI.Drift
             _playerTransform = playerTransform;
         }
 
-        public void ForceUpdate(float deltaTime, float distanceToPlayer, bool isBeingRecalled)
+        public void ForceUpdate(float deltaTime, float distanceToPlayer, bool isBeingRecalled, Vector3 playerVelocity = default)
         {
-            _brain.Update(deltaTime, distanceToPlayer, isBeingRecalled);
+            _brain.Update(deltaTime, distanceToPlayer, isBeingRecalled, playerVelocity);
         }
     }
 }

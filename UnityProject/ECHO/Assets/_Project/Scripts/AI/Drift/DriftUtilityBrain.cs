@@ -15,6 +15,7 @@ namespace EchoZero.AI.Drift
     {
         public float DistanceToPlayer;
         public float RecallDuration;
+        public Vector3 PlayerVelocity;
     }
 
     public class DriftAction : UtilityAction
@@ -50,10 +51,13 @@ namespace EchoZero.AI.Drift
             var patrol = new DriftAction(DriftState.Patrol, "Patrol");
             patrol.AddScorer(new DelegateScorer(() => 0.1f));
 
-            // Pursue — scores when player is within detection range
+            // Pursue — scores using ML-driven trajectory prediction
             var pursue = new DriftAction(DriftState.Pursuing, "Pursue");
-            pursue.AddScorer(new DelegateScorer(() =>
-                _ctx.DistanceToPlayer < DetectionRadius ? 1f : 0f));
+            pursue.AddScorer(new MLPursuitScorer(
+                distanceProvider: () => _ctx.DistanceToPlayer,
+                velocityProvider: () => _ctx.PlayerVelocity,
+                detectionRadius: DetectionRadius
+            ));
 
             // Destabilize — scores hard when player is very close
             var destabilize = new DriftAction(DriftState.Destabilizing, "Destabilize");
@@ -71,7 +75,7 @@ namespace EchoZero.AI.Drift
             _actions.Add(stabilize);
         }
 
-        public void Update(float deltaTime, float distanceToPlayer, bool isBeingRecalled)
+        public void Update(float deltaTime, float distanceToPlayer, bool isBeingRecalled, Vector3 playerVelocity = default)
         {
             if (CurrentState == DriftState.Stabilized) return;
 
@@ -84,6 +88,7 @@ namespace EchoZero.AI.Drift
             {
                 DistanceToPlayer = distanceToPlayer,
                 RecallDuration   = _recallDuration,
+                PlayerVelocity   = playerVelocity
             };
 
             // Evaluate all actions; pick highest scorer

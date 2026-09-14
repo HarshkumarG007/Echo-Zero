@@ -312,7 +312,7 @@ First five tasks only, in dependency order, small enough for one agent session e
 
 ---
 
-### [ ] TASK-023: ML-Driven Drift Navigation Policy
+### [x] TASK-023: ML-Driven Drift Navigation Policy
 
 **Objective:** Augment the Drift's `Pursuing` utility scorer with a small trained model that predicts the player's next position.
 
