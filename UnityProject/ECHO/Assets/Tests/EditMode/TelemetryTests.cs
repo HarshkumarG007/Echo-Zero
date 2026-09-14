@@ -60,5 +60,22 @@ namespace EchoZero.Tests.EditMode
             Assert.IsTrue(json.Contains("DriftStabilized"));
             Assert.IsTrue(json.Contains("Attempts: 3"));
         }
+
+        [Test]
+        public void TelemetryPayload_ContainsNoPII()
+        {
+            EventBus<ChoiceMadeEvent>.Publish(new ChoiceMadeEvent { ChosenFragmentId = "SafeData" });
+            
+            Assert.IsTrue(File.Exists(_expectedPath));
+            string json = File.ReadAllText(_expectedPath);
+            
+            // Assert that common PII fields are NOT present
+            Assert.IsFalse(json.Contains(SystemInfo.deviceUniqueIdentifier), "Payload should not contain device unique ID.");
+            Assert.IsFalse(json.Contains(System.Environment.UserName), "Payload should not contain Environment.UserName.");
+            
+            // Assert session ID is an anonymous GUID
+            var session = JsonUtility.FromJson<TelemetrySession>(json);
+            Assert.IsTrue(System.Guid.TryParse(session.SessionId, out _), "Session ID should be an anonymous GUID.");
+        }
     }
 }
