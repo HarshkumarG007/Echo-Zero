@@ -21,7 +21,11 @@ namespace EchoZero.Narrative.Mira
     [CreateAssetMenu(fileName = "MiraDialogueConfig", menuName = "EchoZero/Mira Dialogue Config")]
     public class MiraDialogueConfig : ScriptableObject
     {
-        [Header("Default")]
+        [Header("Default Variants (Adaptive)")]
+        [TextArea(2, 4)]
+        public string DefaultLineExplorer = "You take your time. I appreciate that. We have work to do.";
+        [TextArea(2, 4)]
+        public string DefaultLineAggressive = "You're reckless. But we have work to do, so let's get moving.";
         [TextArea(2, 4)]
         public string DefaultLine = "You're awake. We have work to do if we're going to fix this place.";
 

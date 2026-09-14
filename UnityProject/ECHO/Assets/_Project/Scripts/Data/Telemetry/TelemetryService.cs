@@ -17,6 +17,8 @@ namespace EchoZero.Data.Telemetry
     public class TelemetryService : ITelemetryService
     {
         private readonly string _sessionId;
+        private int _totalRecallsUsed = 0;
+        private int _totalFragmentsCollected = 0;
 
         public TelemetryService()
         {
@@ -33,19 +35,33 @@ namespace EchoZero.Data.Telemetry
             => Log("session_start", string.Empty);
 
         public void TrackFragmentCollected(string fragmentId)
-            => Log("fragment_collected", $"\"fid\":\"{fragmentId}\"");
+        {
+            _totalFragmentsCollected++;
+            Log("fragment_collected", $"\"fid\":\"{fragmentId}\"");
+        }
 
         public void TrackChoiceMade(string chosenFragmentId)
             => Log("choice_made", $"\"chosen\":\"{chosenFragmentId}\"");
 
         public void TrackRecallUsed(string targetType, bool success)
-            => Log("recall_used", $"\"target\":\"{targetType}\",\"success\":{success.ToString().ToLower()}");
+        {
+            _totalRecallsUsed++;
+            Log("recall_used", $"\"target\":\"{targetType}\",\"success\":{success.ToString().ToLower()}");
+        }
 
         public void TrackDriftStabilized(int attemptCount)
             => Log("drift_stabilized", $"\"attempts\":{attemptCount}");
 
         public void TrackSceneLoaded(string sceneName, float durationMs)
             => Log("scene_loaded", $"\"scene\":\"{sceneName}\",\"load_ms\":{durationMs:F0}");
+
+        public float GetAggressionScore()
+        {
+            // Baseline 0.5f. Increases if player uses RECALL aggressively relative to fragments found.
+            if (_totalFragmentsCollected == 0) return 0.5f;
+            float ratio = (float)_totalRecallsUsed / _totalFragmentsCollected;
+            return Mathf.Clamp01(ratio / 2f); // e.g. 2+ recalls per fragment = 1.0 (highly aggressive)
+        }
 
         // ------------------------------------------------------------------ //
         // Private helpers

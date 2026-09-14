@@ -59,6 +59,22 @@ namespace EchoZero.Narrative.Mira
                 if (!string.IsNullOrEmpty(reaction)) return reaction;
             }
 
+            // Fall back to adaptive default line based on playstyle
+            float aggression = 0.5f;
+            if (ServiceLocator.TryGet<ITelemetryService>(out var telemetry))
+            {
+                aggression = telemetry.GetAggressionScore();
+            }
+
+            if (aggression > 0.7f && _config != null && !string.IsNullOrEmpty(_config.DefaultLineAggressive))
+            {
+                return _config.DefaultLineAggressive;
+            }
+            if (aggression < 0.3f && _config != null && !string.IsNullOrEmpty(_config.DefaultLineExplorer))
+            {
+                return _config.DefaultLineExplorer;
+            }
+
             return Line(_config?.DefaultLine, "You're awake. We have work to do if we're going to fix this place.");
         }
 

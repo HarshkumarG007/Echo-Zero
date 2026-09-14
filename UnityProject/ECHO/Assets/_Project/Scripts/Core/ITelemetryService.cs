@@ -14,5 +14,6 @@ namespace EchoZero.Core
         void TrackRecallUsed(string targetType, bool success);
         void TrackDriftStabilized(int attemptCount);
         void TrackSceneLoaded(string sceneName, float durationMs);
+        float GetAggressionScore();
     }
 }

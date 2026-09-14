@@ -326,7 +326,7 @@ First five tasks only, in dependency order, small enough for one agent session e
 
 ---
 
-### [ ] TASK-024: Adaptive Mira Dialogue Weights
+### [x] TASK-024: Adaptive Mira Dialogue Weights
 
 **Objective:** Use a model to adjust the weights of Mira's dialogue lines based on player playstyle (e.g., aggressive fragment collection vs. slow exploration).
 
