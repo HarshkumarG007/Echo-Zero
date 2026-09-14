@@ -71,3 +71,45 @@ First five tasks only, in dependency order, small enough for one agent session e
 **Acceptance criteria:** Two fragments flagged as contradicting each other correctly trigger the "player must choose" state; non-contradicting fragments don't; validating one fragment in a contradicting pair correctly invalidates the other.
 
 **Test:** EditMode tests — the most logic-heavy, most testable piece in the whole slice. Aim for full coverage of contradiction resolution without touching the scene.
+
+---
+
+### [x] TASK-006: NarrativeState service + flag system
+
+**Objective:** Finalize and test the `NarrativeState` service. It was scaffolded earlier, but needs rigorous EditMode testing to ensure flags are set, read, and saved correctly, and that `NarrativeFlagSetEvent` fires properly.
+
+**Files:** `Narrative/NarrativeState.cs`, `Narrative/Tests/NarrativeStateTests.cs`.
+
+**Dependencies:** TASK-002.
+
+**Acceptance criteria:** Setting a flag publishes the correct event; querying a flag returns the expected value; the state serializes and deserializes flawlessly to `NarrativeStateData`.
+
+**Test:** EditMode tests — assert flag setting, event publishing, and serialization round-trips.
+
+---
+
+### [x] TASK-007: ReconstructionAnchor + world-build sequence
+
+**Objective:** Implement the `ReconstructionAnchor` (the second `IRecallable` target type). Anchors listen for specific corroborating fragments. When all required fragments are collected, the anchor visually "rebuilds" and fires an `AnchorRebuiltEvent`.
+
+**Files:** `World/ReconstructionAnchor.cs`, `World/ReconstructionAnchorSO.cs` (data definition), `World/Tests/ReconstructionAnchorTests.cs`.
+
+**Dependencies:** TASK-004, TASK-005.
+
+**Acceptance criteria:** Targeting an anchor with RECALL checks if required fragments are in `FragmentRegistry`. If yes, it completes the build sequence and fires `AnchorRebuiltEvent`. If no, it provides negative feedback.
+
+**Test:** EditMode tests — mock `FragmentRegistry` state, trigger `OnRecall()`, assert correct event firing based on fragment presence.
+
+---
+
+### [x] TASK-008: Mira stub NPC + dialogue display
+
+**Objective:** Create the deterministic dialogue selector for Mira. She should output a specific dialogue line based on the current `NarrativeState` flags (e.g., if a fragment is collected, she says line A; if a contradiction is active, she says line B).
+
+**Files:** `Narrative/Mira/MiraDialogueSelector.cs`, `Narrative/Mira/Tests/MiraDialogueTests.cs`.
+
+**Dependencies:** TASK-006.
+
+**Acceptance criteria:** Given a specific set of active narrative flags, the selector deterministically returns the correct authored dialogue string.
+
+**Test:** EditMode tests — setup various `NarrativeState` combinations and assert the correct dialogue string is returned.
