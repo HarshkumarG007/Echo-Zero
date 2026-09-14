@@ -158,9 +158,11 @@
 
 ---
 
-## Phase 9 — Red Team
+## Phase 9 — Red Team ✅
 
 **Goal**: The slice is resilient to bad input, save corruption, and edge cases.
+
+**Status**: COMPLETE (Hardened against spam, save tampering, PII leakage, and edge cases)
 
 **Scope**:
 - Save file corruption detection (checksum verification)
@@ -200,4 +202,4 @@
 
 ---
 
-*Current phase: P9 — Red Team. See TASKS.md for active work.*
+*Current phase: P10 — Polish. See TASKS.md for active work.*

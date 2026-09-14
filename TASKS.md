@@ -379,3 +379,59 @@ First five tasks only, in dependency order, small enough for one agent session e
 **Acceptance criteria:** A written report validating the experiments against Quality Gate 7/8, including performance data from the benchmark suite.
 
 **Test:** N/A (Documentation).
+
+---
+
+### [x] TASK-028: Input Rate Limiting (RECALL Spam)
+
+**Objective:** Add a cooldown timer to `RecallAbility` to prevent raycast spamming and telemetry skewing.
+
+**Files:** `Gameplay/RecallAbility.cs`, `Core/Config/IConfigService.cs`, `Core/Config/GameConfig.cs`, `Gameplay/Tests/RecallAbilityTests.cs`.
+
+**Dependencies:** None.
+
+**Acceptance criteria:** `RecallAbility.TriggerRecall()` ignores inputs if fired before the cooldown period expires. Cooldown duration is configurable via `IConfigService`.
+
+**Test:** EditMode test proving multiple rapid calls to `TriggerRecall` only fire a raycast and log telemetry once until simulated time advances.
+
+---
+
+### [x] TASK-029: Choice Pedestal Edge Cases
+
+**Objective:** Ensure `ChoicePedestal` gracefully rejects RECALL attempts when not in an active contradiction state.
+
+**Files:** `Narrative/ChoicePedestal.cs`, `Narrative/Tests/ChoicePedestalTests.cs`.
+
+**Dependencies:** None.
+
+**Acceptance criteria:** `OnRecall()` returns early and provides negative feedback if `FragmentRegistry.IsPlayerMustChooseState` is false or the assigned fragment isn't currently contradicting.
+
+**Test:** EditMode tests verifying `ValidateFragment` is not called and events aren't published if state is invalid.
+
+---
+
+### [x] TASK-030: Telemetry Security Audit (PII Strip)
+
+**Objective:** Ensure telemetry payloads contain absolutely no Personally Identifiable Information (PII) per `AGENTS.md`.
+
+**Files:** `Core/Telemetry/TelemetryPayload.cs`, `Core/Telemetry/LocalTelemetryService.cs`.
+
+**Dependencies:** None.
+
+**Acceptance criteria:** Payloads use an anonymous GUID or hashed session ID. No device unique identifiers, usernames, or IP addresses are serialized.
+
+**Test:** EditMode test inspecting a serialized `TelemetryPayload` to ensure it only contains valid game data fields.
+
+---
+
+### [x] TASK-031: Save File Corruption Recovery Test
+
+**Objective:** Automatically verify that `SaveService` catches corrupted or tampered JSON via checksum and safely resets.
+
+**Files:** `Core/Save/Tests/SaveCorruptionTests.cs`.
+
+**Dependencies:** TASK-002.
+
+**Acceptance criteria:** Corrupting the on-disk save file and attempting to load results in a clean fallback state rather than a thrown exception.
+
+**Test:** EditMode test generating a save, modifying the JSON content on disk without updating the checksum, and asserting `SaveService.Load()` detects the mismatch.
