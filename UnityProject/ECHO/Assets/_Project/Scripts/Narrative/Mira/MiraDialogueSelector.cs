@@ -7,17 +7,20 @@ namespace EchoZero.Narrative.Mira
     /// <summary>
     /// Deterministically selects the appropriate dialogue line for Mira
     /// based on the current NarrativeState and FragmentRegistry state.
-    /// TASK: TASK-008
+    /// All text is driven from <see cref="MiraDialogueConfig"/> (a ScriptableObject).
+    /// TASK: TASK-008 / TASK-020
     /// </summary>
     public class MiraDialogueSelector
     {
         private readonly NarrativeState _narrativeState;
         private readonly FragmentRegistry _fragmentRegistry;
+        private readonly MiraDialogueConfig _config;
 
-        public MiraDialogueSelector(NarrativeState narrativeState, FragmentRegistry fragmentRegistry)
+        public MiraDialogueSelector(NarrativeState narrativeState, FragmentRegistry fragmentRegistry, MiraDialogueConfig config = null)
         {
             _narrativeState = narrativeState;
             _fragmentRegistry = fragmentRegistry;
+            _config = config;
         }
 
         /// <summary>
@@ -28,48 +31,49 @@ namespace EchoZero.Narrative.Mira
             if (_narrativeState.HasFlag(NarrativeFlags.RevealTriggered))
             {
                 // Post-reveal, she is silent/gone.
-                return "";
+                return string.Empty;
             }
 
             if (_fragmentRegistry != null && _fragmentRegistry.IsPlayerMustChooseState)
             {
-                // Active contradiction
-                return "Two memories. They cannot both be true. You must decide what happened.";
+                return Line(_config?.ContradictionLine, "Two memories. They cannot both be true. You must decide what happened.");
             }
 
             if (_narrativeState.HasFlag(NarrativeFlags.ChoiceMade))
             {
-                if (_narrativeState.HasFlag(NarrativeFlags.ChoiceFragmentA))
-                {
-                    return "I remember leaving. It was my choice to go.";
-                }
-                else
-                {
-                    return "I remember fading. I didn't want to go.";
-                }
+                return _narrativeState.HasFlag(NarrativeFlags.ChoiceFragmentA)
+                    ? Line(_config?.ChoiceFragmentALine, "I remember leaving. It was my choice to go.")
+                    : Line(_config?.ChoiceFragmentBLine, "I remember fading. I didn't want to go.");
             }
 
             if (_narrativeState.HasFlag(NarrativeFlags.WalkwayRebuilt))
             {
-                return "The path is clear now. You're getting closer.";
+                return Line(_config?.WalkwayRebuiltLine, "The path is clear now. You're getting closer.");
             }
 
             // Check fragment order based on registry history
             if (_fragmentRegistry != null && _fragmentRegistry.CollectionHistory.Count > 0)
             {
                 string lastFragment = _fragmentRegistry.CollectionHistory[_fragmentRegistry.CollectionHistory.Count - 1];
-                if (lastFragment == "Fragment_A") return "That memory... it feels heavy. Are you sure it's yours?";
-                if (lastFragment == "Fragment_B") return "A bright shard. It almost hurts to look at.";
-                if (lastFragment == "Fragment_01") return "You found a piece of it. There is more out there.";
+                string reaction = FindFragmentReaction(lastFragment);
+                if (!string.IsNullOrEmpty(reaction)) return reaction;
             }
 
-            if (_narrativeState.HasFlag(NarrativeFlags.Fragment01Collected))
-            {
-                return "You found a piece of it. There is more out there.";
-            }
-
-            // Default opening line
-            return "You're awake. We have work to do if we're going to fix this place.";
+            return Line(_config?.DefaultLine, "You're awake. We have work to do if we're going to fix this place.");
         }
+
+        private string FindFragmentReaction(string fragmentId)
+        {
+            if (_config == null || _config.FragmentReactions == null) return string.Empty;
+            foreach (var pair in _config.FragmentReactions)
+            {
+                if (pair.FragmentId == fragmentId)
+                    return pair.DialogueLine;
+            }
+            return string.Empty;
+        }
+
+        private static string Line(string configLine, string fallback)
+            => string.IsNullOrEmpty(configLine) ? fallback : configLine;
     }
 }

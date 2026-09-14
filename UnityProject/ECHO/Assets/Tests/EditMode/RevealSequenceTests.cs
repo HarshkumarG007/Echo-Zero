@@ -21,16 +21,16 @@ namespace EchoZero.Tests.EditMode
             ServiceLocator.Register<NarrativeState>(_narrativeState);
 
             _miraGO = new GameObject("Mira");
-            var miraSelector = _miraGO.AddComponent<MiraDialogueSelector>();
-
+            // MiraDialogueSelector is a plain C# class, not MonoBehaviour.
+            // RevealSequence disables its *host* GameObject, so we just pass the GO.
             _hudGO = new GameObject("HUD");
 
             var revealGO = new GameObject("RevealTrigger");
             _revealSequence = revealGO.AddComponent<RevealSequence>();
 
             // Setup serialized fields via reflection
-            var miraField = typeof(RevealSequence).GetField("_miraInstance", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            miraField?.SetValue(_revealSequence, miraSelector);
+            var miraField = typeof(RevealSequence).GetField("_miraGameObject", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            miraField?.SetValue(_revealSequence, _miraGO);
 
             var hudField = typeof(RevealSequence).GetField("_playerHUD", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             hudField?.SetValue(_revealSequence, _hudGO);

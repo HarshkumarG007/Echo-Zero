@@ -3,10 +3,20 @@ using UnityEngine;
 using EchoZero.Core.Events;
 using EchoZero.Core.Events.Narrative;
 using EchoZero.AI.Utility;
-using System.Linq;
 
 namespace EchoZero.AI.Drift
 {
+    /// <summary>
+    /// Shared context passed into Drift utility scorers each tick.
+    /// Avoids closures capturing outer fields, making scorers independently testable.
+    /// TASK: TASK-019 (ARCH-001 fix)
+    /// </summary>
+    public struct DriftContext
+    {
+        public float DistanceToPlayer;
+        public float RecallDuration;
+    }
+
     public class DriftAction : UtilityAction
     {
         public DriftState State { get; private set; }
@@ -19,63 +29,64 @@ namespace EchoZero.AI.Drift
 
     /// <summary>
     /// Utility-based brain for Drift behavior, replacing the FSM.
+    /// Actions are scored via an explicit <see cref="DriftContext"/> object,
+    /// not via closures capturing private fields.
     /// TASK: TASK-019 (ADR-010)
     /// </summary>
     public class DriftUtilityBrain
     {
         public DriftState CurrentState { get; private set; } = DriftState.Patrol;
 
-        private List<DriftAction> _actions = new();
-        private float _recallDuration = 0f;
+        private readonly List<DriftAction> _actions = new();
+        private DriftContext _ctx;
+        private float _recallDuration;
         private const float RequiredRecallTime = 3f;
+        private const float DetectionRadius = 15f;
+        private const float DestabilizeRadius = 3f;
 
         public DriftUtilityBrain()
         {
-            // Initialize Utility Actions
+            // Patrol — always has a baseline score so the Drift is never frozen
             var patrol = new DriftAction(DriftState.Patrol, "Patrol");
-            patrol.AddScorer(new UtilityScorerWrapper(() => 0.1f)); // Base score
+            patrol.AddScorer(new DelegateScorer(() => 0.1f));
 
-            var alert = new DriftAction(DriftState.Alerted, "Alerted");
-            alert.AddScorer(new UtilityScorerWrapper(() => 
-            {
-                // Unused in raw utility without memory, but we can simulate hysteresis via state.
-                return 0f; 
-            }));
-
+            // Pursue — scores when player is within detection range
             var pursue = new DriftAction(DriftState.Pursuing, "Pursue");
-            pursue.AddScorer(new UtilityScorerWrapper(() => _lastDistanceToPlayer < 15f ? 1f : 0f));
+            pursue.AddScorer(new DelegateScorer(() =>
+                _ctx.DistanceToPlayer < DetectionRadius ? 1f : 0f));
 
+            // Destabilize — scores hard when player is very close
             var destabilize = new DriftAction(DriftState.Destabilizing, "Destabilize");
-            destabilize.AddScorer(new UtilityScorerWrapper(() => _lastDistanceToPlayer <= 3f ? 2f : 0f));
+            destabilize.AddScorer(new DelegateScorer(() =>
+                _ctx.DistanceToPlayer <= DestabilizeRadius ? 2f : 0f));
 
+            // Stabilize — veto score until recall threshold is met, then dominant
             var stabilize = new DriftAction(DriftState.Stabilized, "Stabilize");
-            stabilize.AddScorer(new UtilityScorerWrapper(() => _recallDuration >= RequiredRecallTime ? 100f : 0f));
+            stabilize.AddScorer(new DelegateScorer(() =>
+                _ctx.RecallDuration >= RequiredRecallTime ? 100f : 0f));
 
             _actions.Add(patrol);
-            _actions.Add(alert);
             _actions.Add(pursue);
             _actions.Add(destabilize);
             _actions.Add(stabilize);
         }
 
-        private float _lastDistanceToPlayer;
-
         public void Update(float deltaTime, float distanceToPlayer, bool isBeingRecalled)
         {
             if (CurrentState == DriftState.Stabilized) return;
 
-            _lastDistanceToPlayer = distanceToPlayer;
+            _recallDuration = isBeingRecalled
+                ? _recallDuration + deltaTime
+                : Mathf.Max(0, _recallDuration - deltaTime * 2f);
 
-            if (isBeingRecalled)
+            // Build context once per tick — no closure capture
+            _ctx = new DriftContext
             {
-                _recallDuration += deltaTime;
-            }
-            else
-            {
-                _recallDuration = Mathf.Max(0, _recallDuration - deltaTime * 2f);
-            }
+                DistanceToPlayer = distanceToPlayer,
+                RecallDuration   = _recallDuration,
+            };
 
-            // Evaluate Actions
+            // Evaluate all actions; pick highest scorer
             DriftAction bestAction = null;
             float highestScore = -1f;
 
@@ -104,21 +115,6 @@ namespace EchoZero.AI.Drift
                 EventBus<DriftStabilizedEvent>.Publish(new DriftStabilizedEvent { RecallAttemptCount = 1 });
                 Debug.Log("[DriftUtilityBrain] Drift Stabilized via Utility score.");
             }
-        }
-    }
-
-    public class UtilityScorerWrapper : UtilityScorer
-    {
-        private System.Func<float> _evaluator;
-
-        public UtilityScorerWrapper(System.Func<float> evaluator) : base(null)
-        {
-            _evaluator = evaluator;
-        }
-
-        public override float Score()
-        {
-            return _evaluator();
         }
     }
 }

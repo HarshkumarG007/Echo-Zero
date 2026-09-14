@@ -1,6 +1,5 @@
 using UnityEngine;
 using EchoZero.Core;
-using EchoZero.Narrative.Mira;
 
 namespace EchoZero.Narrative
 {
@@ -10,8 +9,8 @@ namespace EchoZero.Narrative
     /// </summary>
     public class RevealSequence : MonoBehaviour
     {
-        [Tooltip("The Mira instance to disable during the reveal.")]
-        [SerializeField] private MiraDialogueSelector _miraInstance;
+        [Tooltip("The Mira host GameObject to disable during the reveal.")]
+        [SerializeField] private GameObject _miraGameObject;
 
         [Tooltip("The HUD to hide during the reveal.")]
         [SerializeField] private GameObject _playerHUD;
@@ -33,17 +32,20 @@ namespace EchoZero.Narrative
             if (_hasTriggered) return;
             _hasTriggered = true;
 
-            var narrativeState = ServiceLocator.Get<NarrativeState>();
-            if (narrativeState != null)
+            if (ServiceLocator.TryGet<NarrativeState>(out var narrativeState))
             {
                 narrativeState.SetFlag(NarrativeFlags.RevealTriggered, true);
                 Debug.Log("[RevealSequence] Reveal flag set in NarrativeState.");
             }
-
-            if (_miraInstance != null)
+            else
             {
-                _miraInstance.gameObject.SetActive(false);
-                Debug.Log("[RevealSequence] Mira instance disabled.");
+                Debug.LogWarning("[RevealSequence] NarrativeState not registered in ServiceLocator.");
+            }
+
+            if (_miraGameObject != null)
+            {
+                _miraGameObject.SetActive(false);
+                Debug.Log("[RevealSequence] Mira host GameObject disabled.");
             }
 
             if (_playerHUD != null)

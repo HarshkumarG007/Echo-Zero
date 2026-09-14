@@ -1,0 +1,103 @@
+/*
+ * EchoZero — GameplayUI.uss
+ * Stylesheet for the in-game HUD and dialogue system.
+ * Applied by: GameplayUI.cs
+ * TASK: TASK-017 (ARCH-002 / GAP-002 fix)
+ */
+
+/* ── Dialogue Container ────────────────────────────────────────────── */
+
+.dialogue-open {
+    display: flex;
+    opacity: 1;
+    translate: 0 0;
+    transition-duration: 0.35s;
+    transition-property: opacity, translate;
+    transition-timing-function: ease-out;
+}
+
+.dialogue-closed {
+    display: none;
+    opacity: 0;
+    translate: 0 20px;
+    transition-duration: 0.25s;
+    transition-property: opacity, translate;
+    transition-timing-function: ease-in;
+}
+
+/* ── Pause Menu Container ──────────────────────────────────────────── */
+
+.menu-open {
+    display: flex;
+    opacity: 1;
+    scale: 1 1;
+    transition-duration: 0.4s;
+    transition-property: opacity, scale;
+    transition-timing-function: ease-out;
+}
+
+.menu-closed {
+    display: none;
+    opacity: 0;
+    scale: 0.96 0.96;
+    transition-duration: 0.2s;
+    transition-property: opacity, scale;
+    transition-timing-function: ease-in;
+}
+
+/* ── Reticle ───────────────────────────────────────────────────────── */
+
+#reticle {
+    width: 12px;
+    height: 12px;
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.85);
+    border-radius: 50%;
+    align-self: center;
+    justify-content: center;
+}
+
+/* ── Dialogue Box ──────────────────────────────────────────────────── */
+
+#dialogue-container {
+    position: absolute;
+    bottom: 80px;
+    left: 10%;
+    right: 10%;
+    background-color: rgba(0, 0, 0, 0.65);
+    border-radius: 6px;
+    padding: 16px 24px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+#dialogue-text {
+    font-size: 18px;
+    color: rgba(230, 230, 230, 0.95);
+    white-space: normal;
+    -unity-font-style: italic;
+}
+
+/* ── Pause Menu Buttons ────────────────────────────────────────────── */
+
+.pause-button {
+    margin: 6px 0;
+    padding: 12px 32px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.15);
+    color: rgba(230, 230, 230, 0.9);
+    font-size: 16px;
+    transition-duration: 0.15s;
+    transition-property: background-color, border-color;
+}
+
+.pause-button:hover {
+    background-color: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.pause-button:active {
+    background-color: rgba(255, 255, 255, 0.25);
+}

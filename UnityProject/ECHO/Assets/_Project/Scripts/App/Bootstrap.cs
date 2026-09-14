@@ -1,5 +1,6 @@
 using UnityEngine;
 using EchoZero.Core;
+using EchoZero.Core.Settings;
 using EchoZero.Data.Save;
 using EchoZero.Data.Telemetry;
 using EchoZero.Narrative;
@@ -67,6 +68,14 @@ namespace EchoZero.App
             // Narrative
             var narrativeState = new NarrativeState();
             ServiceLocator.Register<NarrativeState>(narrativeState);
+
+            // Gameplay State
+            var gameState = new GameStateManager();
+            ServiceLocator.Register<GameStateManager>(gameState);
+
+            // Settings (loads persisted prefs immediately)
+            var settingsManager = new SettingsManager();
+            ServiceLocator.Register<SettingsManager>(settingsManager);
 
             // Start telemetry session
             telemetry.TrackSessionStart();

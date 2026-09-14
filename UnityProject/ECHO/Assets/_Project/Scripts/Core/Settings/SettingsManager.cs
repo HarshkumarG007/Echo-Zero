@@ -65,10 +65,13 @@ namespace EchoZero.Core.Settings
         {
             EventBus<SettingsChangedEvent>.Publish(new SettingsChangedEvent());
             
-            // AudioManager handles the actual AudioMixer updates via its own event listener, 
-            // or we could push directly if ServiceLocator resolves it.
-            var audio = ServiceLocator.Get<EchoZero.Core.Audio.IAudioManager>();
-            audio?.SetMasterVolume(CurrentSettings.MasterVolume);
+            // Push volume to AudioManager if already registered
+            if (ServiceLocator.TryGet<EchoZero.Core.Audio.IAudioManager>(out var audio))
+            {
+                audio.SetMasterVolume(CurrentSettings.MasterVolume);
+                audio.SetMusicVolume(CurrentSettings.MusicVolume);
+                audio.SetSFXVolume(CurrentSettings.SFXVolume);
+            }
             
             if (CurrentSettings.ResolutionIndex >= 0 && CurrentSettings.ResolutionIndex < Screen.resolutions.Length)
             {

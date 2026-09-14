@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using EchoZero.Core;
 using EchoZero.Gameplay.Recall;
 
@@ -34,9 +34,7 @@ namespace EchoZero.Gameplay
                 Debug.LogError("[PlayerController][Error] RecallAbility component missing.");
         }
 
-        // Called by Unity Input System via the Player Input component (Send Messages mode disabled —
-        // use Action-based callbacks wired in PlayerInputAdapter instead).
-        // TODO(TASK-004): wire Input System action references and call these from PlayerInputAdapter.
+        // Called by Unity Input System via the Player Input component.
 
         public void OnMove(UnityEngine.InputSystem.InputValue value)
             => _movement.SetMoveInput(value.Get<Vector2>());
@@ -46,6 +44,22 @@ namespace EchoZero.Gameplay
 
         public void OnRecall()
             => _recallAbility?.TriggerRecall();
+
+        /// <summary>
+        /// Called by Unity Input System when the Pause action fires (e.g. Escape / Start).
+        /// TASK: TASK-013
+        /// </summary>
+        public void OnPause()
+        {
+            if (ServiceLocator.TryGet<GameStateManager>(out var gameState))
+            {
+                gameState.TogglePause();
+            }
+            else
+            {
+                Debug.LogWarning("[PlayerController] GameStateManager not registered — cannot toggle pause.");
+            }
+        }
 
         private void Update()
             => _movement.Tick(Time.deltaTime);

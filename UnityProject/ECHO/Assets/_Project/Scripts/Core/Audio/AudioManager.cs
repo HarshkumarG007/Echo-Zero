@@ -10,6 +10,8 @@ namespace EchoZero.Core.Audio
         void PlayMusic(AudioClip clip, float fadeDuration = 1f);
         void PlayVoiceover(AudioClip clip);
         void SetMasterVolume(float volume);
+        void SetMusicVolume(float volume);
+        void SetSFXVolume(float volume);
     }
 
     /// <summary>
@@ -74,12 +76,25 @@ namespace EchoZero.Core.Audio
 
         public void SetMasterVolume(float volume)
         {
-            if (_mainMixer != null)
-            {
-                // Convert linear volume [0.0001, 1] to decibels [-80, 0]
-                float db = Mathf.Log10(Mathf.Clamp(volume, 0.0001f, 1f)) * 20f;
-                _mainMixer.SetFloat("MasterVolume", db);
-            }
+            SetMixerVolume("MasterVolume", volume);
+        }
+
+        public void SetMusicVolume(float volume)
+        {
+            SetMixerVolume("MusicVolume", volume);
+        }
+
+        public void SetSFXVolume(float volume)
+        {
+            SetMixerVolume("SFXVolume", volume);
+        }
+
+        private void SetMixerVolume(string parameterName, float linearVolume)
+        {
+            if (_mainMixer == null) return;
+            // Convert linear [0.0001, 1] to decibels [-80, 0]
+            float db = Mathf.Log10(Mathf.Clamp(linearVolume, 0.0001f, 1f)) * 20f;
+            _mainMixer.SetFloat(parameterName, db);
         }
 
         private IEnumerator CrossfadeMusic(AudioClip newClip, float duration)

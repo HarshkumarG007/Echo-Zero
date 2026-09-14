@@ -3,7 +3,7 @@ using EchoZero.Core.Events;
 
 namespace EchoZero.Core
 {
-    public class GamePausedEvent : IEvent { public bool IsPaused; }
+    public struct GamePausedEvent { public bool IsPaused; }
 
     /// <summary>
     /// Manages the high-level game state (Paused vs Playing).

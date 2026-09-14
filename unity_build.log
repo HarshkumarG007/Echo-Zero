@@ -1,0 +1,42 @@
+VBCSCompilerPreWarmer: pre-warm launched (dotnet PID 31624)
+VBCSCompiler prewarm took 4.85 ms
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.6/respin/6000.6.0f1-fa21a270ab12' branch; Version is '6000.6.0f1 (f7f8ed4d1e24) revision 16251117'; Using compiler version '194234433'; Build Type 'Release'
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-Lenovo" at "2026-09-14T12:45:44.0281525Z"
+OS: 'Windows 11  (10.0.26200) CoreSingleLanguage' Language: 'en' Physical Memory: 16107 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
+System  architecture: x64
+Process architecture: x64
+Date: 2026-09-14T12:45:44Z
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 9384, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.18.3+d7ffd15
+  Session Id:              be0f9b8f03e4440584ac9d2f9126e6ba
+  Correlation Id:          c22a00cfad9be3aa836eb166414bb50e
+  External correlation Id: 5354982430490038938
+  Machine Id:              ffGzuU2K1liDn913qd0dVJkF2Mo=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-Lenovo" (connect: 0.00s, validation: 0.00s, handshake: 0.03s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-Lenovo-notifications" at "2026-09-14T12:45:44.0575343Z"
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 13469964808292-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.00
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Licensing Background thread has ended after 0.03s
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.6.0f1\Editor\Unity.exe
+-batchmode
+-quit
+-projectPath
+C:\Users\Lenovo\Downloads\Echo\UnityProject\ECHO
+-logFile
+C:\Users\Lenovo\Downloads\Echo\unity_build.log
+Successfully changed project path to: C:\Users\Lenovo\Downloads\Echo\UnityProject\ECHO
+C:/Users/Lenovo/Downloads/Echo/UnityProject/ECHO
+[ExitDontLaunchBugReporter] Exiting without the bug reporter. Application will exit with return code 1

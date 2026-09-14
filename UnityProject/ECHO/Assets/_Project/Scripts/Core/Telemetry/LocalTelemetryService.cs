@@ -24,9 +24,10 @@ namespace EchoZero.Core.Telemetry
 
     /// <summary>
     /// Logs AI and narrative decisions to a local JSON file.
+    /// Implements <see cref="ITelemetryService"/> so it can be resolved from ServiceLocator.
     /// TASK: TASK-021
     /// </summary>
-    public class LocalTelemetryService : MonoBehaviour
+    public class LocalTelemetryService : MonoBehaviour, ITelemetryService
     {
         private TelemetrySession _session;
         private string _filePath;
@@ -37,9 +38,11 @@ namespace EchoZero.Core.Telemetry
             {
                 SessionId = Guid.NewGuid().ToString()
             };
-            
+
             _filePath = Path.Combine(Application.persistentDataPath, "telemetry_session.json");
-            
+
+            ServiceLocator.Register<ITelemetryService>(this);
+
             EventBus<DriftStabilizedEvent>.Subscribe(OnDriftStabilized);
             EventBus<ChoiceMadeEvent>.Subscribe(OnChoiceMade);
         }
@@ -48,18 +51,39 @@ namespace EchoZero.Core.Telemetry
         {
             EventBus<DriftStabilizedEvent>.Unsubscribe(OnDriftStabilized);
             EventBus<ChoiceMadeEvent>.Unsubscribe(OnChoiceMade);
+            ServiceLocator.Unregister<ITelemetryService>();
             Flush();
         }
 
+        // ── ITelemetryService ──────────────────────────────────────────────
+
+        public void TrackSessionStart()
+            => LogEvent("SessionStart", string.Empty);
+
+        public void TrackFragmentCollected(string fragmentId)
+            => LogEvent("FragmentCollected", $"Fragment: {fragmentId}");
+
+        public void TrackChoiceMade(string chosenFragmentId)
+            => LogEvent("ChoiceMade", $"Fragment: {chosenFragmentId}");
+
+        public void TrackRecallUsed(string targetType, bool success)
+            => LogEvent("RecallUsed", $"Target: {targetType}, Success: {success}");
+
+        public void TrackDriftStabilized(int attemptCount)
+            => LogEvent("DriftStabilized", $"Attempts: {attemptCount}");
+
+        public void TrackSceneLoaded(string sceneName, float durationMs)
+            => LogEvent("SceneLoaded", $"Scene: {sceneName}, Duration: {durationMs:F1}ms");
+
+        // ── EventBus listeners ─────────────────────────────────────────────
+
         private void OnDriftStabilized(DriftStabilizedEvent evt)
-        {
-            LogEvent("DriftStabilized", $"Attempts: {evt.RecallAttemptCount}");
-        }
+            => TrackDriftStabilized(evt.RecallAttemptCount);
 
         private void OnChoiceMade(ChoiceMadeEvent evt)
-        {
-            LogEvent("ChoiceMade", $"Fragment: {evt.ChosenFragmentId}");
-        }
+            => TrackChoiceMade(evt.ChosenFragmentId);
+
+        // ── Internal ───────────────────────────────────────────────────────
 
         public void LogEvent(string eventName, string data)
         {
@@ -69,7 +93,7 @@ namespace EchoZero.Core.Telemetry
                 Timestamp = DateTime.UtcNow.ToString("o"),
                 Data = data
             };
-            
+
             _session.Events.Add(payload);
             Flush();
         }

@@ -30,7 +30,7 @@ namespace EchoZero.Gameplay.VFX
 
         public void FadeTo(float targetValue, float duration)
         {
-            if (_instancedMaterial == null || !string.IsNullOrEmpty(_propertyName) == false) return;
+            if (_instancedMaterial == null || string.IsNullOrEmpty(_propertyName)) return;
             if (!_instancedMaterial.HasProperty(_propertyName))
             {
                 Debug.LogWarning($"[MaterialPropertyFader] Property {_propertyName} not found on material {_instancedMaterial.name}");

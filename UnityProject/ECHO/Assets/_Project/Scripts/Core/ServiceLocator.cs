@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace EchoZero.Core
@@ -68,5 +68,14 @@ namespace EchoZero.Core
         /// NOT for use in production code.
         /// </summary>
         public static void Clear() => _services.Clear();
+
+        /// <summary>
+        /// Removes a specific registered service of type T.
+        /// Call in OnDestroy() of MonoBehaviour services to clean up gracefully.
+        /// </summary>
+        public static void Unregister<T>()
+        {
+            _services.Remove(typeof(T));
+        }
     }
 }
