@@ -1,0 +1,17 @@
+{
+  "name": "EchoZero.UI",
+  "rootNamespace": "EchoZero.UI",
+  "references": [
+    "EchoZero.Core",
+    "EchoZero.Narrative"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

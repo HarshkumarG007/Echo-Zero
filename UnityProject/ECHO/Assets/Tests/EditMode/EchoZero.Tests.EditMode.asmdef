@@ -7,6 +7,9 @@
     "EchoZero.Narrative",
     "EchoZero.Data",
     "EchoZero.App",
+    "EchoZero.World",
+    "EchoZero.UI",
+    "EchoZero.AI",
     "Unity.InputSystem",
     "UnityEngine.TestRunner",
     "UnityEditor.TestRunner"
@@ -17,7 +20,8 @@
   "overrideReferences": true,
   "precompiledReferences": [
     "NSubstitute.dll",
-    "Castle.Core.dll"
+    "Castle.Core.dll",
+    "nunit.framework.dll"
   ],
   "autoReferenced": false,
   "defineConstraints": ["UNITY_INCLUDE_TESTS"],

@@ -1,0 +1,17 @@
+{
+  "name": "EchoZero.AI",
+  "rootNamespace": "EchoZero.AI",
+  "references": [
+    "EchoZero.Core",
+    "EchoZero.Gameplay"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

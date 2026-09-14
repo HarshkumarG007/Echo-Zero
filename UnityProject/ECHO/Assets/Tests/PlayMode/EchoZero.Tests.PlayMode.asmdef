@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "EchoZero.Tests.PlayMode",
   "rootNamespace": "EchoZero.Tests.PlayMode",
   "references": [
@@ -6,13 +6,20 @@
     "EchoZero.Gameplay",
     "EchoZero.Narrative",
     "EchoZero.Data",
+    "EchoZero.World",
+    "EchoZero.UI",
+    "EchoZero.AI",
     "UnityEngine.TestRunner"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": false,
   "overrideReferences": true,
-  "precompiledReferences": ["NSubstitute.dll", "Castle.Core.dll"],
+  "precompiledReferences": [
+    "NSubstitute.dll",
+    "Castle.Core.dll",
+    "nunit.framework.dll"
+  ],
   "autoReferenced": false,
   "defineConstraints": ["UNITY_INCLUDE_TESTS"],
   "versionDefines": [],

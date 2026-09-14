@@ -1,0 +1,18 @@
+{
+  "name": "EchoZero.World",
+  "rootNamespace": "EchoZero.World",
+  "references": [
+    "EchoZero.Core",
+    "EchoZero.Gameplay",
+    "EchoZero.Narrative"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
