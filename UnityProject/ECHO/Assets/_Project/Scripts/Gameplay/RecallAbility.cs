@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using EchoZero.Core;
 using EchoZero.Core.Events;
 using EchoZero.Core.Events.Narrative;
@@ -19,6 +19,7 @@ namespace EchoZero.Gameplay
         [SerializeField] private Camera _recallCamera;
 
         private RecallSystem _recallSystem;
+        private float _lastRecallTime = -999f;
 
         private void Awake()
         {
@@ -29,13 +30,20 @@ namespace EchoZero.Gameplay
         /// <summary>Called by PlayerController when the RECALL input fires.</summary>
         public void TriggerRecall()
         {
+            var config = ServiceLocator.Get<IConfigService>();
+            if (Time.time - _lastRecallTime < config.RecallCooldown)
+            {
+                return; // Cooldown active
+            }
+
             if (_recallCamera == null)
             {
                 Debug.LogError("[RecallAbility][Error] No camera assigned. Cannot raycast.");
                 return;
             }
 
-            var config = ServiceLocator.Get<IConfigService>();
+            _lastRecallTime = Time.time;
+
             var ray    = _recallCamera.ScreenPointToRay(new Vector3(
                 Screen.width  * 0.5f,
                 Screen.height * 0.5f, 0f));

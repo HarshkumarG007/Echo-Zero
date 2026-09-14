@@ -1,4 +1,4 @@
-﻿namespace EchoZero.Core
+namespace EchoZero.Core
 {
     /// <summary>Interface for the configuration service. Allows test substitution.</summary>
     public interface IConfigService
@@ -8,6 +8,9 @@
 
         /// <summary>Maximum RECALL raycast distance in metres.</summary>
         float RecallRange { get; }
+
+        /// <summary>Cooldown in seconds between RECALL raycasts.</summary>
+        float RecallCooldown { get; }
 
         /// <summary>Seconds of sustained RECALL needed to stabilise the Drift.</summary>
         float DriftStabiliseDuration { get; }
@@ -31,6 +34,7 @@
     {
         public float PlayerMoveSpeed       => 5f;
         public float RecallRange           => 4f;
+        public float RecallCooldown        => 0.2f;
         public float DriftStabiliseDuration => 3f;
         public float DriftDetectionRadius  => 8f;
         public float DriftPursuitSpeed     => 3f;
