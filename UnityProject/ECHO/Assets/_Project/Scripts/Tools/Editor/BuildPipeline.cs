@@ -39,9 +39,7 @@ namespace EchoZero.Tools.Editor
             // Define scenes (order matters)
             string[] scenes = 
             {
-                "Assets/_Project/World/Scenes/Bootstrap.unity",
-                "Assets/_Project/World/Scenes/AerieUpperScene.unity",
-                "Assets/_Project/World/Scenes/AerieLowerScene.unity"
+                "Assets/_Project/World/Scenes/Aerie.unity"
             };
 
             BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions
