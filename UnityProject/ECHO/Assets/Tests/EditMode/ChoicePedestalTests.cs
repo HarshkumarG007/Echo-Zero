@@ -83,8 +83,8 @@ namespace EchoZero.Tests.EditMode
 
             Assert.IsTrue(eventFired);
             Assert.IsFalse(_registry.IsPlayerMustChooseState); // Contradiction resolved
-            Assert.IsTrue(_registry.IsValidated("frag_A"));
-            Assert.IsFalse(_registry.IsValidated("frag_B"));
+            Assert.IsTrue(_registry.IsCollected("frag_A"));
+            Assert.IsFalse(_registry.IsCollected("frag_B"));
 
             Assert.IsFalse(_pedestal1.CanRecall);
             Assert.IsFalse(_pedestal2.CanRecall);
