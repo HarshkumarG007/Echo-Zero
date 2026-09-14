@@ -1,4 +1,4 @@
-﻿# PROJECT_STATUS.md — ECHO//ZERO
+# PROJECT_STATUS.md — ECHO//ZERO
 
 > Live status dashboard. Update after every quality gate or phase transition.
 > This file is NOT documentation — it is a ground-truth snapshot.
@@ -12,7 +12,7 @@
 | Phase | P3 — Build |
 | Started | 2026-09-14 |
 | Target completion | TBD (task-driven, not calendar-driven) |
-| Blocking task | TASK-001 (Unity project must exist before anything else) |
+| Blocking task | None (Phase 3 Core Gameplay Complete) |
 | Last updated | 2026-09-14 |
 
 ---
@@ -24,7 +24,7 @@
 | G0 | Idea Validation | ✅ PASS | Blueprint §2–5, kill-critic, premortem complete |
 | G1 | Architecture | ✅ PASS | 10 ADRs, ARCHITECTURE.md, layer model |
 | G2 | Foundation | ✅ PASS | 14 repo files, antigravity.project.json, TASKS.md |
-| G3 | Core Gameplay | ⬜ NOT STARTED | — |
+| G3 | Core Gameplay | ✅ PASS | Tasks 1-8 completed, tested, and committed |
 | G4 | Vertical Slice | ⬜ NOT STARTED | — |
 | G5 | Performance | ⬜ NOT STARTED | — |
 | G6 | AI | ⬜ NOT STARTED | — |
@@ -41,11 +41,14 @@
 
 | Task | Title | Status | Assigned Role |
 |------|-------|--------|--------------|
-| TASK-001 | Unity Project Initialisation | ⬜ Not started | UNITY_ENGINEER |
-| TASK-002 | EventBus + ServiceLocator | ⬜ Not started | UNITY_ENGINEER |
-| TASK-003 | Bootstrap Scene + Services | ⬜ Not started | UNITY_ENGINEER |
-| TASK-004 | Player Controller + RECALL Input | ⬜ Not started | GAMEPLAY_ENGINEER |
-| TASK-005 | MemoryFragment + IRecallable | ⬜ Not started | GAMEPLAY_ENGINEER |
+| TASK-001 | Unity Project Initialisation | ✅ Complete | UNITY_ENGINEER |
+| TASK-002 | EventBus + ServiceLocator | ✅ Complete | UNITY_ENGINEER |
+| TASK-003 | Bootstrap Scene + Services | ✅ Complete | UNITY_ENGINEER |
+| TASK-004 | Player Controller + RECALL Input | ✅ Complete | GAMEPLAY_ENGINEER |
+| TASK-005 | MemoryFragment + IRecallable | ✅ Complete | GAMEPLAY_ENGINEER |
+| TASK-006 | NarrativeState + flag system | ✅ Complete | GAMEPLAY_ENGINEER |
+| TASK-007 | ReconstructionAnchor + world-build | ✅ Complete | GAMEPLAY_ENGINEER |
+| TASK-008 | Mira stub NPC + dialogue display | ✅ Complete | GAMEPLAY_ENGINEER |
 
 ---
 
