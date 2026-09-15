@@ -65,3 +65,36 @@ New ADRs get appended here, numbered sequentially, only when a decision actually
 **Consequences:** We must keep our models small (under a few MBs) to avoid memory footprint issues, and carefully schedule inference so it doesn't block the main thread.
 
 **Rejected:** Python/FastAPI local server (too heavy, complicates distribution); Cloud API (introduces latency, costs money, requires network connection).
+
+---
+
+## ADR-0005: Pull Sentis/ML out of the Phase 3 Drift; use the FSM instead
+
+**Status:** Accepted
+
+**Context:** ADR-0004 explicitly scopes Unity Sentis and ONNX inference to Phase 7. The Drift — Phase 3's one enemy, inside the vertical slice — was running a `UtilityBrain` / `MLPursuitScorer` doing live Sentis inference. That's not a difference of opinion; it's the project's own ADR not being followed. It also caused a real, verifiable failure: Sentis attempted inference on integrated Intel graphics instead of the target RTX 4060, and crashed with an `igc64.dll` driver access violation.
+
+**Decision:** Implement the Drift with a deterministic finite state machine — Patrol → Alerted → Pursuing → Destabilizing → Stabilized. No ML, no Sentis, no ONNX, in Phase 3.
+
+**Why:** One enemy archetype, stabilized by RECALL rather than combat, doesn't need a learned interception model. An FSM comparing player position and distance handles it, is instantly debuggable, has zero model-provenance questions — what was it trained on, what is it actually predicting — and can't crash on the wrong GPU because there's no inference backend to select.
+
+**Consequences:** `MLPursuitScorer` and the Sentis integration come out of the Phase 3 build path — not deleted from the repo, just held for Phase 7, exactly as ADR-0004 already correctly reserved them. The `Unity.InferenceEngine` reference is removed from `EchoZero.AI.asmdef`. `SentisModelRunner` is no longer registered in `Bootstrap.cs`.
+
+**Rejected:** Keeping Sentis in Phase 3 — already tried; the driver crash is the evidence against it.
+
+---
+
+## ADR-0006: Save data stays plain JSON, no encryption or checksums
+
+**Status:** Accepted
+
+**Context:** The shipped save system used SHA-256 checksums "to prevent tampering." ADR-0002 — still the current, unmodified decision on record — specifies plain Newtonsoft JSON and explicitly says save-file tampering "is not a concern for a single-player slice." The checksum version had no ADR of its own; it was added without updating the decision that governs it.
+
+**Decision:** Revert to ADR-0002 as written — plain JSON, defensive parsing on load, no encryption, no checksum.
+
+**Why:** There's no adversary here. It's one player's local save file for a 20–30 minute solo narrative slice; the only person who could "tamper" with it is the player, on their own machine, which isn't a threat model. Checksumming adds real complexity — a side-car `.checksum` file, mismatch logic — to defend against nothing. Worse, it actively punished the player: any hand-edit of their own save discarded their progress silently.
+
+**Consequences:** Simpler save code, and save files stay human-readable for debugging, which was the original point of ADR-0002. `SaveCorruptionTests.cs` is updated — checksum-specific tests removed, a new test confirms hand-edited saves load successfully.
+
+**Rejected:** Keeping checksums — defends against a threat that doesn't exist for this project. If that ever changes (networked saves, leaderboards, something with real stakes), it gets its own ADR against the real case then.
+

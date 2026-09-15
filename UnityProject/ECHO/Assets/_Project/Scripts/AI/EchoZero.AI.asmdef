@@ -3,8 +3,7 @@
   "rootNamespace": "EchoZero.AI",
   "references": [
     "EchoZero.Core",
-    "EchoZero.Gameplay",
-    "Unity.InferenceEngine"
+    "EchoZero.Gameplay"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

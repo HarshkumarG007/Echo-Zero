@@ -5,33 +5,33 @@ using EchoZero.Data.Save;
 
 namespace EchoZero.Tests.EditMode
 {
+    /// <summary>
+    /// Tests for SaveService — plain JSON persistence, per ADR-0002 and ADR-0006.
+    /// No checksum behaviour is tested here; checksums were removed in ADR-0006.
+    /// </summary>
     public class SaveCorruptionTests
     {
         private SaveService _saveService;
         private string _savePath;
-        private string _checksumPath;
 
         [SetUp]
         public void SetUp()
         {
             _saveService = new SaveService();
             _savePath = Path.Combine(Application.persistentDataPath, "save_01.json");
-            _checksumPath = Path.Combine(Application.persistentDataPath, "save_01.checksum");
 
-            // Clean up any existing saves before testing
+            // Clean up any existing saves before each test
             if (File.Exists(_savePath)) File.Delete(_savePath);
-            if (File.Exists(_checksumPath)) File.Delete(_checksumPath);
         }
 
         [TearDown]
         public void TearDown()
         {
             if (File.Exists(_savePath)) File.Delete(_savePath);
-            if (File.Exists(_checksumPath)) File.Delete(_checksumPath);
         }
 
         [Test]
-        public void Load_WhenChecksumMatches_ReturnsValidData()
+        public void Load_WhenValidJson_ReturnsValidData()
         {
             var dataToSave = new GameSaveData { ActiveSceneName = "TestScene" };
             _saveService.Save(dataToSave);
@@ -43,49 +43,59 @@ namespace EchoZero.Tests.EditMode
         }
 
         [Test]
-        public void Load_WhenJsonTampered_ReturnsNullAndResets()
+        public void Load_WhenJsonHandEdited_LoadsSuccessfully()
         {
+            // ADR-0006: hand-editing a local save file is not a threat — load should succeed.
             var dataToSave = new GameSaveData { ActiveSceneName = "TestScene" };
             _saveService.Save(dataToSave);
 
             // Simulate a player opening save_01.json and changing data
             string json = File.ReadAllText(_savePath);
-            string tamperedJson = json.Replace("TestScene", "HackedScene");
-            File.WriteAllText(_savePath, tamperedJson);
+            string editedJson = json.Replace("TestScene", "EditedScene");
+            File.WriteAllText(_savePath, editedJson);
 
-            // Attempt to load. Checksum should fail, returning null (fallback to new game)
+            // Should load the player's edited data fine — no checksum to block it
             var loadedData = _saveService.Load();
 
-            Assert.IsNull(loadedData, "SaveService should return null if the checksum does not match the JSON payload.");
+            Assert.IsNotNull(loadedData, "SaveService should load a hand-edited save file successfully.");
+            Assert.AreEqual("EditedScene", loadedData.ActiveSceneName);
         }
 
         [Test]
-        public void Load_WhenMissingChecksum_ReturnsNull()
+        public void Load_WhenNoSaveExists_ReturnsNull()
         {
-            var dataToSave = new GameSaveData { ActiveSceneName = "TestScene" };
-            _saveService.Save(dataToSave);
-
-            // Delete checksum file
-            File.Delete(_checksumPath);
+            // Ensure file does not exist
+            if (File.Exists(_savePath)) File.Delete(_savePath);
 
             var loadedData = _saveService.Load();
 
-            Assert.IsNull(loadedData, "SaveService should return null if the checksum file is missing.");
+            Assert.IsNull(loadedData, "SaveService should return null when no save file exists.");
         }
-        
+
         [Test]
         public void Load_WhenJsonIsInvalid_ReturnsNull()
         {
-            var dataToSave = new GameSaveData { ActiveSceneName = "TestScene" };
-            _saveService.Save(dataToSave);
-
             // Write garbage to the save file
             File.WriteAllText(_savePath, "{ invalid_json: ");
 
-            // Attempt to load. Json parsing should throw/fail, returning null
+            // Defensive parsing: malformed JSON should return null, not throw
             var loadedData = _saveService.Load();
 
             Assert.IsNull(loadedData, "SaveService should gracefully handle malformed JSON and return null.");
+        }
+
+        [Test]
+        public void SaveExists_ReturnsFalse_WhenNoFileOnDisk()
+        {
+            if (File.Exists(_savePath)) File.Delete(_savePath);
+            Assert.IsFalse(_saveService.SaveExists);
+        }
+
+        [Test]
+        public void SaveExists_ReturnsTrue_AfterSave()
+        {
+            _saveService.Save(new GameSaveData());
+            Assert.IsTrue(_saveService.SaveExists);
         }
     }
 }

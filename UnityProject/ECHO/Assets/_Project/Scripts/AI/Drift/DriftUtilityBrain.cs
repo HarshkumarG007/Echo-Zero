@@ -51,13 +51,9 @@ namespace EchoZero.AI.Drift
             var patrol = new DriftAction(DriftState.Patrol, "Patrol");
             patrol.AddScorer(new DelegateScorer(() => 0.1f));
 
-            // Pursue — scores using ML-driven trajectory prediction
+            // Pursue — scores using simple distance heuristic (no ML)
             var pursue = new DriftAction(DriftState.Pursuing, "Pursue");
-            pursue.AddScorer(new MLPursuitScorer(
-                distanceProvider: () => _ctx.DistanceToPlayer,
-                velocityProvider: () => _ctx.PlayerVelocity,
-                detectionRadius: DetectionRadius
-            ));
+            pursue.AddScorer(new DelegateScorer(() => _ctx.DistanceToPlayer < DetectionRadius ? 1f : 0f));
 
             // Destabilize — scores hard when player is very close
             var destabilize = new DriftAction(DriftState.Destabilizing, "Destabilize");

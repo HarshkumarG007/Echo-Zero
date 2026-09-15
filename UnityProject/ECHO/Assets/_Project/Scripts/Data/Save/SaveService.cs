@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -63,12 +62,13 @@ namespace EchoZero.Data.Save
     // ------------------------------------------------------------------ //
 
     /// <summary>
-    /// Writes and reads GameSaveData to local disk as JSON.
-    /// Each save is accompanied by a SHA-256 checksum file.
-    /// A tampered or corrupted save returns null and logs a warning.
+    /// Writes and reads GameSaveData to local disk as plain JSON (ADR-0002, ADR-0006).
+    /// No encryption, no checksums — this is a single-player local save file; the only
+    /// person who could "tamper" with it is the player on their own machine, which is
+    /// not a threat model for this slice. A corrupt or malformed file returns null and
+    /// starts a new game rather than crashing.
     ///
     /// Save path: Application.persistentDataPath/save_01.json
-    /// Checksum:  Application.persistentDataPath/save_01.checksum
     ///
     /// TASK: TASK-003 (stub registered) / TASK-006 (full implementation)
     /// </summary>
@@ -78,16 +78,14 @@ namespace EchoZero.Data.Save
             new("SaveService.Save");
 
         private readonly string _savePath;
-        private readonly string _checksumPath;
 
         public SaveService()
         {
-            _savePath     = Path.Combine(Application.persistentDataPath, "save_01.json");
-            _checksumPath = Path.Combine(Application.persistentDataPath, "save_01.checksum");
+            _savePath = Path.Combine(Application.persistentDataPath, "save_01.json");
         }
 
         /// <inheritdoc/>
-        public bool SaveExists => File.Exists(_savePath) && File.Exists(_checksumPath);
+        public bool SaveExists => File.Exists(_savePath);
 
         /// <inheritdoc/>
         public void Save(GameSaveData data)
@@ -96,11 +94,8 @@ namespace EchoZero.Data.Save
 
             try
             {
-                var json     = JsonSerializer.Serialize(data, SaveJsonContext.Default.GameSaveData);
-                var checksum = ComputeChecksum(json);
-
-                File.WriteAllText(_savePath,     json,     Encoding.UTF8);
-                File.WriteAllText(_checksumPath, checksum, Encoding.UTF8);
+                var json = JsonSerializer.Serialize(data, SaveJsonContext.Default.GameSaveData);
+                File.WriteAllText(_savePath, json, Encoding.UTF8);
 
                 EventBus<SaveCompletedEvent>.Publish(new SaveCompletedEvent { Success = true });
                 Debug.Log("[SaveService][Info] Save written successfully.");
@@ -123,17 +118,7 @@ namespace EchoZero.Data.Save
 
             try
             {
-                var json             = File.ReadAllText(_savePath, Encoding.UTF8);
-                var storedChecksum   = File.ReadAllText(_checksumPath, Encoding.UTF8).Trim();
-                var computedChecksum = ComputeChecksum(json);
-
-                if (!string.Equals(storedChecksum, computedChecksum, StringComparison.Ordinal))
-                {
-                    Debug.LogWarning("[SaveService][Warning] Save file checksum mismatch. " +
-                                     "File may be corrupted or tampered. Starting new game.");
-                    return null;
-                }
-
+                var json = File.ReadAllText(_savePath, Encoding.UTF8);
                 var data = JsonSerializer.Deserialize(json, SaveJsonContext.Default.GameSaveData);
                 Debug.Log("[SaveService][Info] Save loaded successfully.");
                 return data;
@@ -143,19 +128,6 @@ namespace EchoZero.Data.Save
                 Debug.LogError($"[SaveService][Error] Load failed: {ex.Message}. Starting new game.");
                 return null;
             }
-        }
-
-        // ------------------------------------------------------------------ //
-
-        private static string ComputeChecksum(string json)
-        {
-            var bytes = Encoding.UTF8.GetBytes(json);
-            using var sha = SHA256.Create();
-            var hash = sha.ComputeHash(bytes);
-            var sb = new StringBuilder(hash.Length * 2);
-            foreach (var b in hash)
-                sb.Append(b.ToString("x2"));
-            return sb.ToString();
         }
     }
 }
