@@ -154,7 +154,7 @@
 
 | Task ID | Title | Objective | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- |
-| **TASK-039** | Canonical Documentation Alignment | Consolidate and maintain the 9 canonical documents in `docs/` under Master Prompt v2.0 governance. | `IN PROGRESS` | Tasks 001–038 |
+| **TASK-039** | Canonical Documentation Alignment | Consolidate and maintain the 9 canonical documents in `docs/` under Master Prompt v2.0 governance. | `VERIFIED` | Tasks 001–038 |
 | **TASK-040** | PlayMode Test Suite Expansion | Author end-to-end PlayMode tests for full scene walkthrough from spawn to core reveal. | `PROPOSED` | TASK-039 |
 | **TASK-041** | 3D Visual Art & Asset Replacement | Replace procedural geometric graybox capsules with textured 3D environment assets and characters. | `PROPOSED` | Requires ADR on Art Pipeline |
 | **TASK-042** | Custom URP Crystalline Shader Graph | Implement production crystalline growth and refraction shaders for memory reconstruction. | `PROPOSED` | TASK-041 |
