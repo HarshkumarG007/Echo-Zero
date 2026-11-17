@@ -14,6 +14,7 @@
 - **ADR-0004:** Unity Sentis for Local ML Inference (Phase 7 Scope)
 - **ADR-0005:** Pull Sentis/ML Out of Phase 3 Drift; Use Deterministic FSM/Heuristics
 - **ADR-0006:** Save Data Stays Plain JSON; No Encryption or Checksums
+- **ADR-0007:** Procedural PBR Asset Architecture for URP Vertical Slice
 
 ---
 
@@ -92,3 +93,21 @@
 - **Justification:** Avoids unnecessary complexity (no sidecar checksum files). Keeps save files human-readable and editable.
 - **Consequences:** `SaveCorruptionTests.cs` was updated to verify that malformed JSON recovers gracefully, while valid hand-edited JSON loads successfully.
 - **Alternatives Rejected:** Retaining cryptographic checksums.
+
+---
+
+## ADR-0007: Procedural PBR Asset Architecture for URP Vertical Slice
+
+- **Date:** 2026-11-17
+- **Status:** `Accepted`
+- **Context:** The graybox vertical slice in `Aerie.unity` needs to be elevated to portfolio-grade visual fidelity with distinct aesthetic language for ZERO, The Drift, memory crystals, and the research station. Importing multi-gigabyte binary asset store packs bloats the Git repository, violates the offline/zero-external-bloat mandate, and breaks headless build reproducibility.
+- **Decision:** Implement a **Procedural PBR Material and Compound Mesh Architecture** directly in C# using URP Lit shaders and procedural compound geometric composition (`AerieArtFactory.cs`).
+- **Justification:**
+  1. *Zero External Binary Bloat:* All assets are procedurally generated in-engine via C# without storing massive FBX or texture binaries in Git.
+  2. *Deterministic Reproducibility:* Any developer or automated agent can rebuild the visual assets and scene instantly with `ECHO > Generate Art Assets & Visuals`.
+  3. *Performance Budget Compliance:* Enforces strict draw call ($\le 150$) and triangle budgets ($\le 800\text{K}$) through simple, clean, shared material batching in URP.
+- **Consequences:** Visual meshes rely on stylized geometric compounds (e.g. faceted crystal octahedrons, segmented floating drone shells) rather than high-density organic sculpts. This matches the game's crystalline memory theme.
+- **Alternatives Rejected:**
+  - *Third-party Unity Asset Store packs:* Bloats Git, adds unverified third-party dependencies, and complicates automated builds.
+  - *External DCC toolchain (Blender automation):* Requires external desktop software not guaranteed on all development/CI environments.
+

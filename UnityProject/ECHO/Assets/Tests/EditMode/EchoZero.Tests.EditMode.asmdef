@@ -10,6 +10,7 @@
     "EchoZero.World",
     "EchoZero.UI",
     "EchoZero.AI",
+    "EchoZero.Tools.Editor",
     "Unity.InputSystem",
     "UnityEngine.TestRunner",
     "UnityEditor.TestRunner",

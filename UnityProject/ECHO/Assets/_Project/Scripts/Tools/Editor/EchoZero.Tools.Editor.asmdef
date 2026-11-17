@@ -1,0 +1,24 @@
+{
+  "name": "EchoZero.Tools.Editor",
+  "rootNamespace": "EchoZero.Tools.Editor",
+  "references": [
+    "EchoZero.Core",
+    "EchoZero.Gameplay",
+    "EchoZero.Narrative",
+    "EchoZero.AI",
+    "EchoZero.UI",
+    "EchoZero.App",
+    "Unity.InputSystem"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
